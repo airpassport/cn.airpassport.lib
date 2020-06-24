@@ -1,8 +1,10 @@
 package org.dekuan.airpassport.lib.time;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dekuan.airpassport.lib.model.LocalDateInterval;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 /**
@@ -10,6 +12,52 @@ import java.time.LocalDate;
  */
 public class LibTime
 {
+	public static LocalDate fromDateString( String date )
+	{
+		if ( StringUtils.isBlank( date ) )
+		{
+			return null;
+		}
+
+		LocalDate parsedDate = null;
+
+		try
+		{
+			//	a date in format "yyyy-mm-dd".
+			parsedDate = LocalDate.parse( date );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+		}
+
+		return parsedDate;
+	}
+
+	public static LocalDateTime fromDateTimeString( String datetime )
+	{
+		if ( StringUtils.isBlank( datetime ) )
+		{
+			return null;
+		}
+
+		LocalDateTime parsedDate = null;
+
+		try
+		{
+			//	a date in format "yyyy-mm-dd HH:ii:ss".
+			parsedDate = LocalDateTime.parse( datetime );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+		}
+
+		return parsedDate;
+	}
+
+
+
 	public static boolean isDateIntervalsOverlapped
 		(
 			LocalDate oDate1Begin,
