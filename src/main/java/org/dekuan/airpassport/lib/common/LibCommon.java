@@ -8,6 +8,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LibCommon
 {
+	public static boolean isValidUserId( long userId )
+	{
+		return userId > 10000000;
+	}
+
 	public static boolean isValidMid( String sMid )
 	{
 		if ( StringUtils.isBlank( sMid ) )

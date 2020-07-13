@@ -9,6 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LibCommonTests
 {
 	@Test
+	public void testIsValidUserId()
+	{
+		assertTrue( LibCommon.isValidUserId( 10001351 ) );
+		assertTrue( LibCommon.isValidUserId( 10000001 ) );
+		assertFalse( LibCommon.isValidUserId( 10000000 ) );
+		assertFalse( LibCommon.isValidUserId( 111111 ) );
+		assertFalse( LibCommon.isValidUserId( -1 ) );
+	}
+
+	@Test
 	public void testIsValidMid()
 	{
 		assertTrue( LibCommon.isValidMid( "2b877804-1ff8-4e55-8714-068085e285db" ) );
@@ -22,9 +32,9 @@ public class LibCommonTests
 	public void testCalcErrorCode()
 	{
 		String sErrorCode1 = LibCommon.calcErrorCode( new Object(){}, null );
-		assertEquals( "org.dekuan.lib.LibCommonTests.testCalcErrorCode", sErrorCode1 );
+		assertEquals( "org.dekuan.airpassport.lib.LibCommonTests.testCalcErrorCode", sErrorCode1 );
 
 		String sErrorCode2 = LibCommon.calcErrorCode( new Object(){}, "invalid.name" );
-		assertEquals( "org.dekuan.lib.LibCommonTests.testCalcErrorCode.invalid.name", sErrorCode2 );
+		assertEquals( "org.dekuan.airpassport.lib.LibCommonTests.testCalcErrorCode.invalid.name", sErrorCode2 );
 	}
 }
