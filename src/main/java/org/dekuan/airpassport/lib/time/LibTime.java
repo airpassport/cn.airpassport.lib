@@ -45,7 +45,9 @@ public class LibTime
 
 		try
 		{
-			//	a date in format "yyyy-mm-dd HH:ii:ss".
+			//	the text to parse such as "2007-12-03T10:15:30", not null
+			//	a date time in format "yyyy-mm-ddTHH:ii:ss"
+			//	a date time in format "yyyy-mm-ddTHH:ii"
 			parsedDate = LocalDateTime.parse( datetime );
 		}
 		catch ( Exception e )
