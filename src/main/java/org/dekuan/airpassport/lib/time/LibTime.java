@@ -5,6 +5,7 @@ import org.dekuan.airpassport.lib.model.LocalDateInterval;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 
 /**
@@ -12,6 +13,15 @@ import java.time.LocalDateTime;
  */
 public class LibTime
 {
+	//	timestamp in milliseconds with time zone GMT
+	public static long getTimestampWithGMT()
+	{
+		long timestamp	= System.currentTimeMillis();
+		int offset	= ( TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings() );
+
+		return timestamp + offset;
+	}
+
 	public static LocalDate fromDateString( String date )
 	{
 		if ( StringUtils.isBlank( date ) )

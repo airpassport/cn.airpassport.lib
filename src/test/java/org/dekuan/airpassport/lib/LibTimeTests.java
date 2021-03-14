@@ -12,6 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LibTimeTests
 {
 	@Test
+	public void testGetTimestampWithGMTCase1()
+	{
+		long ts = LibTime.getTimestampWithGMT();
+		assertTrue( ts > 1615764130383L );
+	}
+
+	@Test
 	public void testOverlapDatesCase1()
 	{
 		assertTrue( LibTime.isDateIntervalsOverlapped
