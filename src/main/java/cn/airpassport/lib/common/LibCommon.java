@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.common;
+package cn.airpassport.lib.common;
 
 import org.apache.commons.lang3.StringUtils;
 

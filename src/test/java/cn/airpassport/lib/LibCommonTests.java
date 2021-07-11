@@ -1,7 +1,8 @@
-package org.dekuan.airpassport.lib;
+package cn.airpassport.lib;
 
-import org.dekuan.airpassport.lib.common.LibCommon;
+import cn.airpassport.lib.common.LibCommon;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +12,7 @@ public class LibCommonTests
 	@Test
 	public void testIsValidUserId()
 	{
-		assertTrue( LibCommon.isValidUserId( 10001351 ) );
+		Assertions.assertTrue( LibCommon.isValidUserId( 10001351 ) );
 		assertTrue( LibCommon.isValidUserId( 10000001 ) );
 		assertFalse( LibCommon.isValidUserId( 10000000 ) );
 		assertFalse( LibCommon.isValidUserId( 111111 ) );
@@ -32,9 +33,9 @@ public class LibCommonTests
 	public void testCalcErrorCode()
 	{
 		String sErrorCode1 = LibCommon.calcErrorCode( new Object(){}, null );
-		assertEquals( "org.dekuan.airpassport.lib.LibCommonTests.testCalcErrorCode", sErrorCode1 );
+		assertEquals( "LibCommonTests.testCalcErrorCode", sErrorCode1 );
 
 		String sErrorCode2 = LibCommon.calcErrorCode( new Object(){}, "invalid.name" );
-		assertEquals( "org.dekuan.airpassport.lib.LibCommonTests.testCalcErrorCode.invalid.name", sErrorCode2 );
+		assertEquals( "LibCommonTests.testCalcErrorCode.invalid.name", sErrorCode2 );
 	}
 }

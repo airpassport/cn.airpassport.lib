@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.phone;
+package cn.airpassport.lib.phone;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

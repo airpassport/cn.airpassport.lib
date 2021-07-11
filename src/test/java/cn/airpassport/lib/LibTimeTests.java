@@ -1,8 +1,9 @@
-package org.dekuan.airpassport.lib;
+package cn.airpassport.lib;
 
-import org.dekuan.airpassport.lib.model.LocalDateInterval;
-import org.dekuan.airpassport.lib.time.LibTime;
+import cn.airpassport.lib.model.LocalDateInterval;
+import cn.airpassport.lib.time.LibTime;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
 
@@ -14,7 +15,7 @@ public class LibTimeTests
 	@Test
 	public void testOverlapDatesCase1()
 	{
-		assertTrue( LibTime.isDateIntervalsOverlapped
+		Assertions.assertTrue( LibTime.isDateIntervalsOverlapped
 			(
 				LocalDate.parse( "2019-12-01" ),
 				LocalDate.parse( "2019-12-22" ),

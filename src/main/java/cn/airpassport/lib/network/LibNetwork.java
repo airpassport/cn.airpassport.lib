@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.network;
+package cn.airpassport.lib.network;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.InetAddressValidator;

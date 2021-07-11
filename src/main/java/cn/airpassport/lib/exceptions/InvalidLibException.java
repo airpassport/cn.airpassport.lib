@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.exceptions;
+package cn.airpassport.lib.exceptions;
 
 
 

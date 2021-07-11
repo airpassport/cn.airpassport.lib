@@ -1,7 +1,7 @@
-package org.dekuan.airpassport.lib.time;
+package cn.airpassport.lib.time;
 
+import cn.airpassport.lib.model.LocalDateInterval;
 import org.apache.commons.lang3.StringUtils;
-import org.dekuan.airpassport.lib.model.LocalDateInterval;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

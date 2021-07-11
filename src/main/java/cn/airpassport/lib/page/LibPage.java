@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.page;
+package cn.airpassport.lib.page;
 
 
 /**

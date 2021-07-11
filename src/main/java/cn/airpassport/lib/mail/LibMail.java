@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.mail;
+package cn.airpassport.lib.mail;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;

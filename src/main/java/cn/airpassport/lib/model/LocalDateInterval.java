@@ -1,8 +1,8 @@
-package org.dekuan.airpassport.lib.model;
+package cn.airpassport.lib.model;
 
 import java.time.LocalDate;
 
-import org.dekuan.airpassport.lib.common.LibCommon;
+import cn.airpassport.lib.common.LibCommon;
 
 
 /**

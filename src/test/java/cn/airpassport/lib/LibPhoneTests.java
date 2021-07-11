@@ -1,6 +1,6 @@
-package org.dekuan.airpassport.lib;
+package cn.airpassport.lib;
 
-import org.dekuan.airpassport.lib.phone.LibPhone;
+import cn.airpassport.lib.phone.LibPhone;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

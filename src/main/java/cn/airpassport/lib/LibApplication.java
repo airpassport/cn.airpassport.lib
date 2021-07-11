@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib;
+package cn.airpassport.lib;
 
 
 public class LibApplication
