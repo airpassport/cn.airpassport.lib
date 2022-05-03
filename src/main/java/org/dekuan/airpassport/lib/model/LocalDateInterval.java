@@ -22,7 +22,7 @@ public class LocalDateInterval
 	{
 		if ( null == begin )
 		{
-			throw new IllegalArgumentException( LibCommon.calcErrorCode(new Object(){}, "null.begin" ) );
+			throw new IllegalArgumentException( LibCommon.calcErrorCode( new Object(){}, "null.begin" ) );
 		}
 		if ( null == end )
 		{

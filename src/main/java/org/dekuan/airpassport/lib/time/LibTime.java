@@ -1,7 +1,7 @@
 package org.dekuan.airpassport.lib.time;
 
-import org.apache.commons.lang3.StringUtils;
 import org.dekuan.airpassport.lib.model.LocalDateInterval;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.TimeZone;
 
 
 /**
- *	@class	LibTime
+ *	LibTime
  */
 public class LibTime
 {
@@ -86,7 +86,7 @@ public class LibTime
 		return oDate1Begin.isBefore( oDate2End ) && oDate2Begin.isBefore( oDate1End );
 	}
 
-	public static boolean isDateIntervalsOverlapped(LocalDateInterval oDateInterval1, LocalDateInterval oDateInterval2 )
+	public static boolean isDateIntervalsOverlapped( LocalDateInterval oDateInterval1, LocalDateInterval oDateInterval2 )
 	{
 		if ( null == oDateInterval1 || null == oDateInterval2 )
 		{
