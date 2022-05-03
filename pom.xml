@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.airpassport</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>lib</artifactId>
     <version>1.0.0</version>
     <name>airpassportLib</name>
     <description>Lib of AirPassport by Dekuan, Inc.</description>
