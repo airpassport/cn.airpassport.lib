@@ -17,13 +17,13 @@ import org.dekuan.airpassport.lib.exceptions.InvalidLibException;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public class LibHttpPost extends LibHttp
+public class LibHttpGet extends LibHttp
 {
-	public HttpModel postRequest()
+	public HttpModel getRequest()
 	{
-		if ( ! LibHttp.HttpMethod.isPostRequest( this.getMethod() ) )
+		if ( ! HttpMethod.isGetRequest( this.getMethod() ) )
 		{
-			throw new InvalidLibException( "invalid httpMethod, must be one of POST, PATCH, PUT." );
+			throw new InvalidLibException( "invalid httpMethod, must be one of HEAD, GET." );
 		}
 
 		//	...
@@ -35,8 +35,8 @@ public class LibHttpPost extends LibHttp
 			//
 			//	build http request
 			//
-			HttpEntityEnclosingRequestBase httpRequest = this._buildHttpRequestObject();
-			log.debug( "postRequest :: executing request " + httpRequest.getRequestLine() );
+			HttpRequestBase httpRequest = this._buildHttpRequestObject();
+			log.debug( "getRequest :: executing request " + httpRequest.getRequestLine() );
 
 			//
 			//	execute the request
@@ -49,7 +49,7 @@ public class LibHttpPost extends LibHttp
 		catch ( Exception e )
 		{
 			e.printStackTrace();
-			log.error( "exception in postRequest, {}", e.getMessage() );
+			log.error( "exception in getRequest, {}", e.getMessage() );
 			throw new InvalidLibException( String.format( "failed to post request, %s", e.getMessage() ) );
 		}
 	}
@@ -61,7 +61,7 @@ public class LibHttpPost extends LibHttp
 
 		try
 		{
-			if ( LibHttp.HttpContentType.ApplicationJson == this.getContentType() )
+			if ( HttpContentType.ApplicationJson == this.getContentType() )
 			{
 				//
 				//	content type : JSON
@@ -85,46 +85,30 @@ public class LibHttpPost extends LibHttp
 		return requestEntity;
 	}
 
-	private HttpEntityEnclosingRequestBase _buildHttpRequestObject()
+	private HttpRequestBase _buildHttpRequestObject()
 	{
 		if ( Strings.isBlank( this.getUrl() ) )
 		{
 			throw new InvalidLibException( "invalid url" );
 		}
 
-		HttpEntityEnclosingRequestBase httpRequest	= null;
-		if ( LibHttp.HttpMethod.POST == this.getMethod() )
+		HttpRequestBase httpRequest	= null;
+		if ( HttpMethod.HEAD == this.getMethod() )
 		{
-			httpRequest = new HttpPost( this.getUrl() );
+			httpRequest = new HttpHead( this.getUrl() );
 		}
-		else if ( LibHttp.HttpMethod.PATCH == this.getMethod() )
+		else if ( HttpMethod.GET == this.getMethod() )
 		{
-			httpRequest = new HttpPatch( this.getUrl() );
-		}
-		else if ( LibHttp.HttpMethod.PUT == this.getMethod() )
-		{
-			httpRequest = new HttpPut( this.getUrl() );
+			httpRequest = new HttpGet( this.getUrl() );
 		}
 
 		if ( null == httpRequest )
 		{
-			throw new InvalidLibException( "failed to build post request by specified method, not supported method." );
+			throw new InvalidLibException( "failed to build get request by specified method, not supported method." );
 		}
 
 		try
 		{
-			//
-			//	for POST, PUT, PATCH request
-			//	build requesting data/post data
-			//	set http content type and content value
-			//
-			StringEntity requestEntity = _buildRequestStringEntity();
-			if ( null != requestEntity )
-			{
-				//	set post data, and it's content type to Http Header
-				httpRequest.setEntity( requestEntity );
-			}
-
 			//
 			//	normal headers
 			//

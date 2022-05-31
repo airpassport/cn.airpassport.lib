@@ -46,7 +46,7 @@ public class HttpModel implements Serializable
 
 	//	current timestamp in milliseconds
 	@Builder.Default
-	protected long timestamp	= 0;
+	protected long timestamp	= System.currentTimeMillis();
 
 	@Builder.Default
 	protected Object body		= new HashMap<>();
