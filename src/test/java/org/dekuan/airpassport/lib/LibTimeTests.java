@@ -1,6 +1,6 @@
 package org.dekuan.airpassport.lib;
 
-import org.dekuan.airpassport.lib.model.LocalDateInterval;
+import org.dekuan.airpassport.lib.models.LocalDateInterval;
 import org.dekuan.airpassport.lib.time.LibTime;
 import org.junit.Test;
 

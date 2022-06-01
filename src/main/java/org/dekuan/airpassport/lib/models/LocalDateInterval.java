@@ -1,4 +1,4 @@
-package org.dekuan.airpassport.lib.model;
+package org.dekuan.airpassport.lib.models;
 
 import java.time.LocalDate;
 
