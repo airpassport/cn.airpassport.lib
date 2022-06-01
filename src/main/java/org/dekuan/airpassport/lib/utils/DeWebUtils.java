@@ -1,7 +1,8 @@
 package org.dekuan.airpassport.lib.utils;
 
-import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.HttpHead;
 import org.dekuan.airpassport.lib.network.LibNetwork;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -9,54 +10,64 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.util.Strings;
 
 @Component
 public class DeWebUtils
 {
-	public static String getClientIp( HttpServletRequest request )
+	public static String getClientIp()
 	{
-		return null != request ? request.getRemoteAddr() : "0.0.0.0";
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		if ( null != httpServletRequest )
+		{
+			return httpServletRequest.getRemoteAddr();
+		}
+
+		return null;
 	}
 
-	public static String getClientIpWithProxy( HttpServletRequest request )
+	public static String getClientIpWithProxy()
 	{
-		String remoteAddr = null;
-
-		if ( null != request )
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		if ( null == httpServletRequest )
 		{
-			final String[] arrIpHeaderCandidates = { "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_X_FORWARDED_FOR", "HTTP_X_FORWARDED", "HTTP_X_CLUSTER_CLIENT_IP", "HTTP_CLIENT_IP", "HTTP_FORWARDED_FOR", "HTTP_FORWARDED", "HTTP_VIA", "REMOTE_ADDR" };
+			return null;
+		}
 
-			for ( String sHeader : arrIpHeaderCandidates )
+		String remoteAddress = null;
+		final String[] arrIpHeaderCandidates = { "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_X_FORWARDED_FOR", "HTTP_X_FORWARDED", "HTTP_X_CLUSTER_CLIENT_IP", "HTTP_CLIENT_IP", "HTTP_FORWARDED_FOR", "HTTP_FORWARDED", "HTTP_VIA", "REMOTE_ADDR" };
+
+		for ( String sHeader : arrIpHeaderCandidates )
+		{
+			String sIpList = httpServletRequest.getHeader( sHeader );
+			if ( StringUtils.isBlank( sIpList ) || "unknown".equalsIgnoreCase( sIpList ) )
 			{
-				String sIpList = request.getHeader( sHeader );
-				if ( StringUtils.isBlank( sIpList ) || "unknown".equalsIgnoreCase( sIpList ) )
-				{
-					continue;
-				}
-
-				String[] arrIpList = sIpList.split( "," );
-				if ( 0 == arrIpList.length )
-				{
-					continue;
-				}
-
-				//	...
-				String sIp = arrIpList[ 0 ].trim();
-				if ( LibNetwork.isValidIpAddress( sIp ) )
-				{
-					remoteAddr = sIp;
-					break;
-				}
+				continue;
 			}
 
-			if ( null == remoteAddr )
+			String[] arrIpList = sIpList.split( "," );
+			if ( 0 == arrIpList.length )
 			{
-				remoteAddr = request.getRemoteAddr();
+				continue;
+			}
+
+			//	...
+			String sIp = arrIpList[ 0 ].trim();
+			if ( LibNetwork.isValidIpAddress( sIp ) )
+			{
+				remoteAddress = sIp;
+				break;
 			}
 		}
 
-		return null != remoteAddr ? remoteAddr : "0.0.0.0";
+		if ( null == remoteAddress )
+		{
+			remoteAddress = httpServletRequest.getRemoteAddr();
+		}
+
+		return remoteAddress;
 	}
 
 	/**
@@ -64,41 +75,47 @@ public class DeWebUtils
 	 *
 	 * @return string
 	 */
-	public static String getUserAgent( HttpServletRequest request )
+	public static String getUserAgent()
 	{
-		String userAgent = "";
+		return getHttpHeaderValue( HttpHeaders.USER_AGENT );
+	}
 
-		if ( null != request )
+	public static String getHttpHeaderValue( String key )
+	{
+		if ( Strings.isBlank( key ) )
 		{
-			userAgent = request.getHeader( "User-Agent" );
+			return null;
 		}
 
-		return userAgent;
-	}
-
-	public static String buildBearerTokenHeaderKey()
-	{
-		return "Authorization";
-	}
-	public static String buildBearerTokenHeaderValue( String token )
-	{
-		return String.format( "Bearer %s", Strings.nullToEmpty( token ).trim() );
-	}
-	public static String readBearerTokenHeader()
-	{
-		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-		if ( null != requestAttributes )
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		if ( null != httpServletRequest )
 		{
-			ServletRequestAttributes servletRequestAttributes = ( ServletRequestAttributes ) requestAttributes;
-			HttpServletRequest       httpServletRequest       = servletRequestAttributes.getRequest();
-			String                   authorizationHeaderValue = httpServletRequest.getHeader( "Authorization" );
-			if ( null != authorizationHeaderValue && authorizationHeaderValue.startsWith( "Bearer " ) )
-			{
-				return authorizationHeaderValue.substring( 7 );
-			}
+			return httpServletRequest.getHeader( key );
 		}
 
 		return null;
 	}
 
+	public static HttpServletRequest getHttpServletRequest()
+	{
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		if ( null != requestAttributes )
+		{
+			ServletRequestAttributes servletRequestAttributes = ( ServletRequestAttributes ) requestAttributes;
+			return servletRequestAttributes.getRequest();
+		}
+
+		return null;
+	}
+	public static HttpServletResponse getHttpServletResponse()
+	{
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		if ( null != requestAttributes )
+		{
+			ServletRequestAttributes servletRequestAttributes = ( ServletRequestAttributes ) requestAttributes;
+			return servletRequestAttributes.getResponse();
+		}
+
+		return null;
+	}
 }

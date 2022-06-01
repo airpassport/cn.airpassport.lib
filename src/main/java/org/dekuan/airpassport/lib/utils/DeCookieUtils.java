@@ -26,18 +26,18 @@ public class DeCookieUtils
 
 	/**
 	 *	read all cookie
-	 *	@param	request		-
 	 *	@return	HashMap
 	 */
-	public static HashMap<String, Cookie> readAllCookie(HttpServletRequest request )
+	public static HashMap<String, Cookie> readAllCookie()
 	{
-		if ( null == request )
+		HttpServletRequest httpServletRequest = DeWebUtils.getHttpServletRequest();
+		if ( null == httpServletRequest )
 		{
-			throw new InvalidParameterException( "invalid request" );
+			throw new NullPointerException( "invalid httpServletRequest" );
 		}
 
 		HashMap<String, Cookie> mapCookies = new HashMap<>();
-		Cookie[] arrCookies = request.getCookies();
+		Cookie[] arrCookies = httpServletRequest.getCookies();
 		if ( null != arrCookies )
 		{
 			for ( Cookie cookie : arrCookies )
@@ -54,19 +54,18 @@ public class DeCookieUtils
 
 	/**
 	 *	read cookie
-	 *	@param	request		-
 	 *	@param	name		-
 	 *	@return	String
 	 */
 	public static String readCookie
 		(
-			HttpServletRequest request,
 			String name
 		)
 	{
-		if ( null == request )
+		HttpServletRequest httpServletRequest = DeWebUtils.getHttpServletRequest();
+		if ( null == httpServletRequest )
 		{
-			throw new InvalidParameterException( "invalid request" );
+			throw new NullPointerException( "invalid httpServletRequest" );
 		}
 		if ( StringUtils.isBlank( name ) )
 		{
@@ -75,7 +74,7 @@ public class DeCookieUtils
 
 		//	...
 		String sValue	= null;
-		Cookie[] arrCookies = request.getCookies();
+		Cookie[] arrCookies = httpServletRequest.getCookies();
 		if ( null != arrCookies )
 		{
 			for ( Cookie cookie : arrCookies )
@@ -102,29 +101,29 @@ public class DeCookieUtils
 
 	/**
 	 *	set a cookie
-	 *	@param	response	-
 	 *	@param	name		-
 	 *	@param	value		-
 	 *	@param	expire		-
 	 */
 	public static void setCookie
 		(
-			HttpServletRequest request,
-			HttpServletResponse response,
 			String domain,
 			String name,
 			String value,
 			int expire
 		)
 	{
-		if ( null == request )
+		HttpServletRequest httpServletRequest = DeWebUtils.getHttpServletRequest();
+		if ( null == httpServletRequest )
 		{
-			throw new InvalidParameterException( "invalid request" );
+			throw new NullPointerException( "invalid httpServletRequest" );
 		}
-		if ( null == response )
+		HttpServletResponse httpServletResponse = DeWebUtils.getHttpServletResponse();
+		if ( null == httpServletResponse )
 		{
-			throw new InvalidParameterException( "invalid response" );
+			throw new NullPointerException( "invalid httpServletResponse" );
 		}
+
 		if ( StringUtils.isBlank( domain ) )
 		{
 			throw new InvalidParameterException( "invalid domain" );
@@ -163,36 +162,33 @@ public class DeCookieUtils
 		//cookie.setHttpOnly( DEFAULT_HTTP_ONLY );
 
 		//	add cookie to response
-		response.addCookie( cookie );
+		httpServletResponse.addCookie( cookie );
 	}
 	public static void setCookie
 		(
-			HttpServletRequest request,
-			HttpServletResponse response,
 			String sDomain,
 			String sName,
 			String sValue
 		)
 	{
-		DeCookieUtils.setCookie( request, response, sDomain, sName, sValue, DEFAULT_EXPIRE );
+		setCookie( sDomain, sName, sValue, DEFAULT_EXPIRE );
 	}
 
 
 	/**
 	 *	delete a cookie
-	 *	@param	response	-
 	 *	@param	name		-
 	 */
 	public static void deleteCookie
 		(
-			HttpServletResponse response,
 			String domain,
 			String name
 		)
 	{
-		if ( null == response )
+		HttpServletResponse httpServletResponse = DeWebUtils.getHttpServletResponse();
+		if ( null == httpServletResponse )
 		{
-			throw new InvalidParameterException( "invalid response" );
+			throw new NullPointerException( "invalid httpServletResponse" );
 		}
 		if ( StringUtils.isBlank( domain ) )
 		{
@@ -228,6 +224,6 @@ public class DeCookieUtils
 		cookie.setPath( DEFAULT_PATH );
 
 		//	add cookie to response
-		response.addCookie( cookie );
+		httpServletResponse.addCookie( cookie );
 	}
 }
