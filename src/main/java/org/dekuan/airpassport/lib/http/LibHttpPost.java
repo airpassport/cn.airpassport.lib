@@ -12,6 +12,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.exceptions.InvalidLibException;
+import org.dekuan.airpassport.lib.exceptions.TimeoutLibException;
+
+import java.io.InterruptedIOException;
 
 
 @NoArgsConstructor
@@ -45,6 +48,12 @@ public class LibHttpPost extends LibHttp
 			{
 				return this.parseResponse( response );
 			}
+		}
+		catch ( InterruptedIOException e )
+		{
+			e.printStackTrace();
+			log.error( "InterruptedIOException in postRequest, {}", e.getMessage() );
+			throw new TimeoutLibException( String.format( "post request timeout, %s", e.getMessage() ) );
 		}
 		catch ( Exception e )
 		{

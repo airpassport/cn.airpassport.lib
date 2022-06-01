@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
+import org.apache.http.ProtocolException;
+import org.apache.http.auth.AuthenticationException;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -12,6 +14,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.exceptions.InvalidLibException;
+import org.dekuan.airpassport.lib.exceptions.TimeoutLibException;
+
+import java.io.InterruptedIOException;
 
 
 @NoArgsConstructor
@@ -46,11 +51,17 @@ public class LibHttpGet extends LibHttp
 				return this.parseResponse( response );
 			}
 		}
+		catch ( InterruptedIOException e )
+		{
+			e.printStackTrace();
+			log.error( "InterruptedIOException in getRequest, {}", e.getMessage() );
+			throw new TimeoutLibException( String.format( "get request timeout, %s", e.getMessage() ) );
+		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
 			log.error( "exception in getRequest, {}", e.getMessage() );
-			throw new InvalidLibException( String.format( "failed to post request, %s", e.getMessage() ) );
+			throw new InvalidLibException( String.format( "failed to get request, %s", e.getMessage() ) );
 		}
 	}
 
