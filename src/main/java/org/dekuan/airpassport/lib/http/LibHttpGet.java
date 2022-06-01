@@ -5,18 +5,17 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
-import org.apache.http.ProtocolException;
-import org.apache.http.auth.AuthenticationException;
+import org.apache.http.MethodNotSupportedException;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.util.Strings;
-import org.dekuan.airpassport.lib.exceptions.InvalidLibException;
-import org.dekuan.airpassport.lib.exceptions.TimeoutLibException;
+import org.dekuan.airpassport.lib.exceptions.AirExceptions;
 
 import java.io.InterruptedIOException;
+import java.security.InvalidParameterException;
 
 
 @NoArgsConstructor
@@ -28,7 +27,7 @@ public class LibHttpGet extends LibHttp
 	{
 		if ( ! HttpMethod.isGetRequest( this.getMethod() ) )
 		{
-			throw new InvalidLibException( "invalid httpMethod, must be one of HEAD, GET." );
+			throw new InvalidParameterException( "invalid httpMethod, must be one of HEAD, GET." );
 		}
 
 		//	...
@@ -55,13 +54,13 @@ public class LibHttpGet extends LibHttp
 		{
 			e.printStackTrace();
 			log.error( "InterruptedIOException in getRequest, {}", e.getMessage() );
-			throw new TimeoutLibException( String.format( "get request timeout, %s", e.getMessage() ) );
+			throw new AirExceptions.Timeout( String.format( "get request timeout, %s", e.getMessage() ) );
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
 			log.error( "exception in getRequest, {}", e.getMessage() );
-			throw new InvalidLibException( String.format( "failed to get request, %s", e.getMessage() ) );
+			throw new AirExceptions.Execute( String.format( "failed to get request, %s", e.getMessage() ) );
 		}
 	}
 
@@ -90,7 +89,7 @@ public class LibHttpGet extends LibHttp
 		catch ( Exception e )
 		{
 			log.info( "failed in _buildRequestStringEntity, {}", e.getMessage() );
-			throw new InvalidLibException( e.getMessage() );
+			throw new AirExceptions.Execute( e.getMessage() );
 		}
 
 		return requestEntity;
@@ -100,7 +99,7 @@ public class LibHttpGet extends LibHttp
 	{
 		if ( Strings.isBlank( this.getUrl() ) )
 		{
-			throw new InvalidLibException( "invalid url" );
+			throw new InvalidParameterException( "invalid url" );
 		}
 
 		HttpRequestBase httpRequest	= null;
@@ -115,7 +114,7 @@ public class LibHttpGet extends LibHttp
 
 		if ( null == httpRequest )
 		{
-			throw new InvalidLibException( "failed to build get request by specified method, not supported method." );
+			throw new AirExceptions.Unsupported( "failed to build get request by specified method, not supported method." );
 		}
 
 		try
@@ -154,7 +153,7 @@ public class LibHttpGet extends LibHttp
 		catch ( Exception e )
 		{
 			log.info( "failed in _buildHttpRequestObject, {}", e.getMessage() );
-			throw new InvalidLibException( e.getMessage() );
+			throw new AirExceptions.Execute( e.getMessage() );
 		}
 
 		//	...
