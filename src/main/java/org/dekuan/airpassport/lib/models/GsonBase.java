@@ -2,32 +2,24 @@ package org.dekuan.airpassport.lib.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.dekuan.airpassport.lib.exceptions.AirExceptions;
 
+import java.io.Serializable;
 
-public class GsonBase
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public class GsonBase implements Serializable
 {
-	protected String error;
+	@Builder.Default
+	protected String error	= null;
 
-	public GsonBase()
-	{
-		this.error	= null;
-	}
-	public GsonBase( String error )
-	{
-		this.error	= error;
-	}
-
-
-	public String getError()
-	{
-		return error;
-	}
-	public void setError( String error )
-	{
-		this.error = error;
-	}
 
 	/**
 	 *	parse json string to Object
