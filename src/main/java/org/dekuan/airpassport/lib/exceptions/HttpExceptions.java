@@ -12,8 +12,8 @@ import java.util.List;
 
 
 /**
- * About @ResponseStatus <a
- * href="https://www.baeldung.com/exception-handling-for-rest-with-spring">https://www.baeldung.com/exception-handling-for-rest-with-spring</a>
+ * About @ResponseStatus
+ * <a href="https://www.baeldung.com/exception-handling-for-rest-with-spring">...</a>
  */
 public final class HttpExceptions
 {
