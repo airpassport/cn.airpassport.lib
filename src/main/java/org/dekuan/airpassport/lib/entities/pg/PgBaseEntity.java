@@ -52,7 +52,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@SuperBuilder
+@SuperBuilder( builderMethodName = "pgBaseEntityBuilder" )
 @MappedSuperclass
 public class PgBaseEntity implements Serializable, TenantSupport
 {
