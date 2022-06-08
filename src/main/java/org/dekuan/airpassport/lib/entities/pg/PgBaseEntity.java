@@ -13,8 +13,13 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapProperties;
 
 import javax.persistence.*;
+import javax.validation.Configuration;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -51,6 +56,19 @@ import java.util.UUID;
 @MappedSuperclass
 public class PgBaseEntity implements Serializable, TenantSupport
 {
+	protected static Validator validator;
+
+	static
+	{
+		//
+		//	initialize a validator
+		//
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
+		factory.close();
+	}
+
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE )
 	@Column( name = "id", columnDefinition = "BIGSERIAL", updatable = false, nullable = false, unique = true )
@@ -108,6 +126,9 @@ public class PgBaseEntity implements Serializable, TenantSupport
 
 	public PgBaseEntity()
 	{
+		//
+		//	initialize members
+		//
 		this.id		= 0;
 		this.mid	= UUID.randomUUID();
 

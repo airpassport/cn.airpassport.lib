@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.util.Strings;
 
-@Component
+
+
 public class DeWebUtils
 {
 	public static String getClientIp()

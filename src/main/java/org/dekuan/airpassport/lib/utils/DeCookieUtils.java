@@ -1,5 +1,6 @@
 package org.dekuan.airpassport.lib.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
@@ -10,10 +11,9 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 
+@Slf4j
 public class DeCookieUtils
 {
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger( DeCookieUtils.class );
-
 	//
 	//	default constants
 	//
@@ -92,7 +92,7 @@ public class DeCookieUtils
 		}
 
 		//	...
-		logger.info( ">>>>>>>>>>" +
+		log.info( ">>>>>>>>>>" +
 			" CookieUtils::readCookie() name:{}, value:{}", name, sValue );
 
 		return sValue;

@@ -1,19 +1,19 @@
 package org.dekuan.airpassport.lib.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
 
+@Slf4j
 public class DeFileUtils
 {
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger( DeFileUtils.class );
-
-
 	/**
 	 * 	identify mime type of file
 	 */
@@ -53,11 +53,9 @@ public class DeFileUtils
 		}
 		catch ( IOException ioException )
 		{
-			logger.error( "Unable to determine file type for {} due to exception {}", file.toPath(), ioException );
+			log.error( "Unable to determine file type for {} due to exception {}", file.toPath(), ioException );
 		}
 
 		return fileType;
 	}
-
-
 }
