@@ -1,14 +1,30 @@
 package org.dekuan.airpassport.lib.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
 
+@Slf4j
 public class DeDateTimeUtils
 {
 	public static final ZoneId zone = ZoneId.systemDefault();
+	public static SimpleDateFormat isoDateFormatter;
+
+
+	static
+	{
+		isoDateFormatter = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss", Locale.ENGLISH );
+		isoDateFormatter.setTimeZone( TimeZone.getDefault() );
+	}
+
 
 
 	public static LocalDate getDefaultLocalDate()
@@ -53,7 +69,7 @@ public class DeDateTimeUtils
 	/**
 	 * 	convert type of LocalDateTime to type of timestamp
 	 */
-	public static long getTimestampOfDateTime( LocalDateTime localDateTime )
+	public static long getTimestampOfLocalDateTime( LocalDateTime localDateTime )
 	{
 		if ( null == localDateTime )
 		{
@@ -68,10 +84,11 @@ public class DeDateTimeUtils
 	/**
 	 * 	get string type of timestamp
 	 */
-	public static String getStringTimestampOfLongLocalDateTime( LocalDateTime localDateTime )
+	public static String getStringTimestampOfLocalDateTime( LocalDateTime localDateTime )
 	{
-		return String.valueOf( getTimestampOfDateTime( localDateTime ) );
+		return String.valueOf( getTimestampOfLocalDateTime( localDateTime ) );
 	}
+
 
 	/**
 	 * 	format LocalDateTime
@@ -96,17 +113,85 @@ public class DeDateTimeUtils
 		return localDateTime.format( ISO_LOCAL_DATE_TIME );
 	}
 
-	/**
-	 * 	convert customized type to type of LocalDateTime
-	 */
-	public static LocalDateTime parseStringToDateTime( String string, String format )
+
+	public static LocalDateTime parseStringToLocalDateTime( String string, String format )
 	{
-		DateTimeFormatter df = DateTimeFormatter.ofPattern( format );
-		return LocalDateTime.parse( string, df );
-	}
-	public static LocalDateTime parseStringToIsoDateTime( String string )
-	{
-		return LocalDateTime.parse( string, ISO_LOCAL_DATE_TIME );
+		try
+		{
+			DateTimeFormatter df = DateTimeFormatter.ofPattern( format );
+			return LocalDateTime.parse( string, df );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( e.getMessage() );
+		}
+
+		return null;
 	}
 
+	/**
+	 * 	convert customized type to type of LocalDateTime
+	 * 	"2022-06-14T18:40:23.807979"
+	 * 	"2022-06-14T18:40:23.807"
+	 * 	"2022-06-14T18:40:23"
+	 */
+	public static LocalDateTime parseIsoStringToLocalDateTime( String string )
+	{
+		try
+		{
+			return LocalDateTime.parse( string, ISO_LOCAL_DATE_TIME );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( e.getMessage() );
+		}
+
+		return null;
+	}
+
+
+	/**
+	 * 	isoDateFormatter: "yyyy-MM-dd hh:mm:ss"
+	 */
+	public static String buildIsoStringOfDate( Date date )
+	{
+		if ( null == date )
+		{
+			return "";
+		}
+
+		try
+		{
+			return isoDateFormatter.format( date );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( e.getMessage() );
+		}
+
+		return null;
+	}
+
+	public static Date parseIsoStringToDate( String stringDate )
+	{
+		if ( null == stringDate )
+		{
+			return null;
+		}
+
+		try
+		{
+			return isoDateFormatter.parse( stringDate );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( e.getMessage() );
+		}
+
+		return null;
+	}
 }
