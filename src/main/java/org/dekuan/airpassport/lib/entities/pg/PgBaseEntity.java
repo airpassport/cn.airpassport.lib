@@ -56,7 +56,8 @@ import java.util.UUID;
 @MappedSuperclass
 public class PgBaseEntity implements Serializable, TenantSupport
 {
-	protected static Validator validator;
+	public static Validator validator;
+
 
 	static
 	{
