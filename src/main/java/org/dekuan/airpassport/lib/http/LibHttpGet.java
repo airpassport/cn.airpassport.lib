@@ -65,7 +65,7 @@ public class LibHttpGet extends LibHttp
 	}
 
 
-	private StringEntity _buildRequestStringEntity()
+	protected StringEntity _buildRequestStringEntity()
 	{
 		StringEntity requestEntity = null;
 
@@ -95,7 +95,7 @@ public class LibHttpGet extends LibHttp
 		return requestEntity;
 	}
 
-	private HttpRequestBase _buildHttpRequestObject()
+	protected HttpRequestBase _buildHttpRequestObject()
 	{
 		if ( Strings.isBlank( this.getUrl() ) )
 		{
@@ -110,6 +110,10 @@ public class LibHttpGet extends LibHttp
 		else if ( HttpMethod.GET == this.getMethod() )
 		{
 			httpRequest = new HttpGet( this.getUrl() );
+		}
+		else if ( HttpMethod.DELETE == this.getMethod() )
+		{
+			httpRequest = new HttpDelete( this.getUrl() );
 		}
 
 		if ( null == httpRequest )

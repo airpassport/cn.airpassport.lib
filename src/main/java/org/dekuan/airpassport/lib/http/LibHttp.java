@@ -41,7 +41,8 @@ public abstract class LibHttp
 		GET,
 		POST,
 		PUT,
-		PATCH;
+		PATCH,
+		DELETE;
 
 		public static boolean isGetRequest( HttpMethod method )
 		{

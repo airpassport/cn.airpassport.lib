@@ -64,7 +64,7 @@ public class LibHttpPost extends LibHttp
 	}
 
 
-	private StringEntity _buildRequestStringEntity()
+	protected StringEntity _buildRequestStringEntity()
 	{
 		StringEntity requestEntity = null;
 
@@ -94,7 +94,7 @@ public class LibHttpPost extends LibHttp
 		return requestEntity;
 	}
 
-	private HttpEntityEnclosingRequestBase _buildHttpRequestObject()
+	protected HttpEntityEnclosingRequestBase _buildHttpRequestObject()
 	{
 		if ( Strings.isBlank( this.getUrl() ) )
 		{
@@ -102,18 +102,19 @@ public class LibHttpPost extends LibHttp
 		}
 
 		HttpEntityEnclosingRequestBase httpRequest	= null;
-		if ( LibHttp.HttpMethod.POST == this.getMethod() )
+		if ( HttpMethod.POST == this.getMethod() )
 		{
 			httpRequest = new HttpPost( this.getUrl() );
 		}
-		else if ( LibHttp.HttpMethod.PATCH == this.getMethod() )
-		{
-			httpRequest = new HttpPatch( this.getUrl() );
-		}
-		else if ( LibHttp.HttpMethod.PUT == this.getMethod() )
+		else if ( HttpMethod.PUT == this.getMethod() )
 		{
 			httpRequest = new HttpPut( this.getUrl() );
 		}
+		else if ( HttpMethod.PATCH == this.getMethod() )
+		{
+			httpRequest = new HttpPatch( this.getUrl() );
+		}
+
 
 		if ( null == httpRequest )
 		{
