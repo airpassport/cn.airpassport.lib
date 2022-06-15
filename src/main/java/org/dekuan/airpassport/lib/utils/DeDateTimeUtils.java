@@ -17,12 +17,19 @@ public class DeDateTimeUtils
 {
 	public static final ZoneId zone = ZoneId.systemDefault();
 	public static SimpleDateFormat isoDateFormatter;
+	public static DateTimeFormatter isoLocalDateTimeFormatter;
 
 
 	static
 	{
-		isoDateFormatter = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss", Locale.ENGLISH );
+		//	for Date object
+		//	https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+		isoDateFormatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss", Locale.ENGLISH );
 		isoDateFormatter.setTimeZone( TimeZone.getDefault() );
+
+		//	for LocalDateTime object
+		//	https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+		isoLocalDateTimeFormatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss" );
 	}
 
 
@@ -110,7 +117,7 @@ public class DeDateTimeUtils
 			return "";
 		}
 
-		return localDateTime.format( ISO_LOCAL_DATE_TIME );
+		return localDateTime.format( isoLocalDateTimeFormatter );
 	}
 
 
@@ -132,15 +139,15 @@ public class DeDateTimeUtils
 
 	/**
 	 * 	convert customized type to type of LocalDateTime
-	 * 	"2022-06-14T18:40:23.807979"
-	 * 	"2022-06-14T18:40:23.807"
-	 * 	"2022-06-14T18:40:23"
+	 * 	"2022-06-14 18:40:23.807979"
+	 * 	"2022-06-14 18:40:23.807"
+	 * 	"2022-06-14 18:40:23"
 	 */
 	public static LocalDateTime parseIsoStringToLocalDateTime( String string )
 	{
 		try
 		{
-			return LocalDateTime.parse( string, ISO_LOCAL_DATE_TIME );
+			return LocalDateTime.parse( string, isoLocalDateTimeFormatter );
 		}
 		catch ( Exception e )
 		{
