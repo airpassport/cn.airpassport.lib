@@ -44,9 +44,9 @@ public abstract class LibHttp
 		PATCH,
 		DELETE;
 
-		public static boolean isGetRequest( HttpMethod method )
+		public static boolean isBaseRequest( HttpMethod method )
 		{
-			return GET == method || HEAD == method;
+			return GET == method || HEAD == method || DELETE == method;
 		}
 		public static boolean isPostRequest( HttpMethod method )
 		{

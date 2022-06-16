@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public class LibHttpHead extends LibHttpGet
+public class LibHttpHead extends LibHttpBaseRequest
 {
 	public HttpModel headRequest()
 	{
-		return this.getRequest();
+		return this.executeRequest( HttpMethod.HEAD );
 	}
 }

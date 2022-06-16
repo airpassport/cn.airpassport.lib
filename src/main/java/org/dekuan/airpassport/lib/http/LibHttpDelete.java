@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public class LibHttpDelete extends LibHttpGet
+public class LibHttpDelete extends LibHttpBaseRequest
 {
 	public HttpModel deleteRequest()
 	{
-		return this.getRequest();
+		return this.executeRequest( HttpMethod.DELETE );
 	}
 }

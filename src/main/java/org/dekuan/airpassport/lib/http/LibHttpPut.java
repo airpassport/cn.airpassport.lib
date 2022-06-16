@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public class LibHttpPut extends LibHttpPost
+public class LibHttpPut extends LibHttpEntityRequest
 {
 	public HttpModel putRequest()
 	{
-		return this.postRequest();
+		return this.executeRequest( HttpMethod.PUT );
 	}
 }

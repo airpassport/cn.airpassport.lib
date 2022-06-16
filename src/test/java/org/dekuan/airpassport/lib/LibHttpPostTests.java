@@ -3,6 +3,7 @@ package org.dekuan.airpassport.lib;
 import lombok.extern.slf4j.Slf4j;
 import org.dekuan.airpassport.lib.http.HttpModel;
 import org.dekuan.airpassport.lib.http.LibHttp;
+import org.dekuan.airpassport.lib.http.LibHttpEntityRequest;
 import org.dekuan.airpassport.lib.http.LibHttpPost;
 
 import java.util.HashMap;
@@ -32,7 +33,6 @@ public class LibHttpPostTests
 
 		LibHttpPost libHttp = LibHttpPost.builder()
 			.url( url )
-			.method( LibHttp.HttpMethod.POST )
 			.contentType( LibHttp.HttpContentType.ApplicationJson )
 			.postData( postData )
 			.auth( LibHttp.Auth.builder()
