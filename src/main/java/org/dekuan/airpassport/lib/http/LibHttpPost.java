@@ -11,6 +11,6 @@ public class LibHttpPost extends LibHttpEntityRequest
 {
 	public HttpModel postRequest()
 	{
-		return this.executeRequest( HttpMethod.PUT );
+		return this.executeRequest( HttpMethod.POST );
 	}
 }
