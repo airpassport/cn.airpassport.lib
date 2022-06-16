@@ -8,8 +8,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.models.rest.RestHeader;
 
 import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 
 /**
@@ -138,6 +137,24 @@ public class HttpModel extends RestHeader
 		else if ( result instanceof Float )
 		{
 			return ( (Float)result );
+		}
+
+		return null;
+	}
+
+	public static List<Object> getArrayListByKey( Object obj, String keyName )
+	{
+		Object result = getObjectByKey( obj, keyName );
+		if ( null != result )
+		{
+			if ( result.getClass().isArray() )
+			{
+				return Arrays.asList( (Object [])result );
+			}
+			else if ( result instanceof Collection )
+			{
+				return new ArrayList<>( (Collection<?> ) result );
+			}
 		}
 
 		return null;
