@@ -3,8 +3,6 @@ package org.dekuan.airpassport.lib.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +12,23 @@ import java.security.InvalidParameterException;
 @Slf4j
 public class DeFileUtils
 {
+	public static long getFileSize( final String filePath )
+	{
+		if ( StringUtils.isBlank( filePath ) )
+		{
+			throw new InvalidParameterException( "invalid filePath" );
+		}
+
+		File file = new File( filePath );
+		if ( file.exists() )
+		{
+			//	size of the file in bytes
+			return file.length();
+		}
+
+		return 0;
+	}
+
 	/**
 	 * 	identify mime type of file
 	 */
