@@ -35,7 +35,7 @@ public class LibHttpPatchTests
 				.xTenantIDValue( "1" )
 				.build() )
 			.build();
-		HttpModel httpModel = libHttp.patchRequest();
+		HttpModel httpModel = libHttp.fetchHttpModel();
 		log.debug( "httpModel : {}", httpModel.toString() );
 
 		assertTrue( httpModel.getStatus() >= 200 );

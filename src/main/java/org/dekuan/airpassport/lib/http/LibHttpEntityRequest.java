@@ -28,18 +28,49 @@ public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpReq
 {
 	protected HttpModel fetchHttpModel( HttpMethod method )
 	{
-		HttpResponse httpResponse = this.fetchResponse( method );
-		return this.parseResponse( httpResponse );
+		if ( ! LibHttp.HttpMethod.isPostRequest( method ) )
+		{
+			throw new InvalidParameterException( "invalid httpMethod, must be one of POST, PATCH, PUT." );
+		}
+
+		//	...
+		this.setMethod( method );
+
+		//	...
+		try ( CloseableHttpClient httpClient = HttpClients
+			.custom()
+			.setDefaultRequestConfig( this.buildCustomRequestConfig( this.getTimeout() ) )
+			.build() )
+		{
+			//
+			//	build http request
+			//
+			HttpEntityEnclosingRequestBase httpRequest = this._buildHttpRequestObject();
+			log.debug( "postRequest :: executing request " + httpRequest.getRequestLine() );
+
+			//
+			//	execute the request
+			//
+			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
+			{
+				return this.parseResponse( response );
+			}
+		}
+		catch ( InterruptedIOException e )
+		{
+			e.printStackTrace();
+			log.error( "InterruptedIOException in fetchHttpModel, {}", e.getMessage() );
+			throw new AirExceptions.Timeout( String.format( "post request timeout, %s", e.getMessage() ) );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( "exception in fetchHttpModel, {}", e.getMessage() );
+			throw new AirExceptions.Execute( String.format( "failed to post request, %s", e.getMessage() ) );
+		}
 	}
 
 	protected String fetchString( HttpMethod method ) throws IOException
-	{
-		HttpResponse httpResponse = this.fetchResponse( method );
-		HttpEntity   entity       = httpResponse.getEntity();
-		return null != entity ? EntityUtils.toString( entity ) : "";
-	}
-
-	protected HttpResponse fetchResponse( HttpMethod method )
 	{
 		if ( ! LibHttp.HttpMethod.isPostRequest( method ) )
 		{
@@ -66,19 +97,25 @@ public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpReq
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
-				return response;
+				if ( null != response )
+				{
+					HttpEntity   entity = response.getEntity();
+					return null != entity ? EntityUtils.toString( entity ) : null;
+				}
+
+				return null;
 			}
 		}
 		catch ( InterruptedIOException e )
 		{
 			e.printStackTrace();
-			log.error( "InterruptedIOException in postRequest, {}", e.getMessage() );
+			log.error( "InterruptedIOException in fetchString, {}", e.getMessage() );
 			throw new AirExceptions.Timeout( String.format( "post request timeout, %s", e.getMessage() ) );
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
-			log.error( "exception in postRequest, {}", e.getMessage() );
+			log.error( "exception in fetchString, {}", e.getMessage() );
 			throw new AirExceptions.Execute( String.format( "failed to post request, %s", e.getMessage() ) );
 		}
 	}

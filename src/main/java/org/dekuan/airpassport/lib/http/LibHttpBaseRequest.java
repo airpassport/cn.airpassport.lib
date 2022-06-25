@@ -28,18 +28,49 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 {
 	protected HttpModel fetchHttpModel( HttpMethod method )
 	{
-		HttpResponse httpResponse = this.fetchResponse( method );
-		return this.parseResponse( httpResponse );
+		if ( ! HttpMethod.isBaseRequest( method ) )
+		{
+			throw new InvalidParameterException( "invalid httpMethod, must be one of HEAD, GET, DELETE." );
+		}
+
+		//	...
+		this.setMethod( method );
+
+		//	...
+		try ( CloseableHttpClient httpClient = HttpClients
+			.custom()
+			.setDefaultRequestConfig( this.buildCustomRequestConfig( this.getTimeout() ) )
+			.build() )
+		{
+			//
+			//	build http request
+			//
+			HttpRequestBase httpRequest = this._buildHttpRequestObject();
+			log.debug( "getRequest :: executing request " + httpRequest.getRequestLine() );
+
+			//
+			//	execute the request
+			//
+			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
+			{
+				return this.parseResponse( response );
+			}
+		}
+		catch ( InterruptedIOException e )
+		{
+			e.printStackTrace();
+			log.error( "InterruptedIOException in fetchHttpModel, {}", e.getMessage() );
+			throw new AirExceptions.Timeout( String.format( "get request timeout, %s", e.getMessage() ) );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( "exception in fetchHttpModel, {}", e.getMessage() );
+			throw new AirExceptions.Execute( String.format( "failed to get request, %s", e.getMessage() ) );
+		}
 	}
 
 	protected String fetchString( HttpMethod method ) throws IOException
-	{
-		HttpResponse httpResponse = this.fetchResponse( method );
-		HttpEntity entity = httpResponse.getEntity();
-		return null != entity ? EntityUtils.toString( entity ) : "";
-	}
-
-	protected HttpResponse fetchResponse( HttpMethod method )
 	{
 		if ( ! HttpMethod.isBaseRequest( method ) )
 		{
@@ -66,19 +97,20 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
-				return response;
+				HttpEntity entity = response.getEntity();
+				return null != entity ? EntityUtils.toString( entity ) : null;
 			}
 		}
 		catch ( InterruptedIOException e )
 		{
 			e.printStackTrace();
-			log.error( "InterruptedIOException in getRequest, {}", e.getMessage() );
+			log.error( "InterruptedIOException in fetchString, {}", e.getMessage() );
 			throw new AirExceptions.Timeout( String.format( "get request timeout, %s", e.getMessage() ) );
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
-			log.error( "exception in getRequest, {}", e.getMessage() );
+			log.error( "exception in fetchString, {}", e.getMessage() );
 			throw new AirExceptions.Execute( String.format( "failed to get request, %s", e.getMessage() ) );
 		}
 	}
