@@ -4,15 +4,19 @@ import com.google.gson.Gson;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.exceptions.AirExceptions;
 
+import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.security.InvalidParameterException;
 
@@ -20,9 +24,22 @@ import java.security.InvalidParameterException;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public abstract class LibHttpEntityRequest extends LibHttp
+public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpRequest
 {
-	protected HttpModel executeRequest( HttpMethod method )
+	protected HttpModel fetchHttpModel( HttpMethod method )
+	{
+		HttpResponse httpResponse = this.fetchResponse( method );
+		return this.parseResponse( httpResponse );
+	}
+
+	protected String fetchString( HttpMethod method ) throws IOException
+	{
+		HttpResponse httpResponse = this.fetchResponse( method );
+		HttpEntity   entity       = httpResponse.getEntity();
+		return null != entity ? EntityUtils.toString( entity ) : "";
+	}
+
+	protected HttpResponse fetchResponse( HttpMethod method )
 	{
 		if ( ! LibHttp.HttpMethod.isPostRequest( method ) )
 		{
@@ -49,7 +66,7 @@ public abstract class LibHttpEntityRequest extends LibHttp
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
-				return this.parseResponse( response );
+				return response;
 			}
 		}
 		catch ( InterruptedIOException e )

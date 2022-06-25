@@ -4,13 +4,22 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
 public class LibHttpPut extends LibHttpEntityRequest
 {
-	public HttpModel putRequest()
+	@Override
+	public String fetchString() throws IOException
 	{
-		return this.executeRequest( HttpMethod.PUT );
+		return fetchString( HttpMethod.PUT );
+	}
+
+	@Override
+	public HttpModel fetchHttpModel()
+	{
+		return fetchHttpModel( HttpMethod.PUT );
 	}
 }
