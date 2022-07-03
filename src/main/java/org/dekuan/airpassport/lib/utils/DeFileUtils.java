@@ -2,6 +2,7 @@ package org.dekuan.airpassport.lib.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.tika.Tika;
 
 import java.io.File;
@@ -12,6 +13,34 @@ import java.security.InvalidParameterException;
 @Slf4j
 public class DeFileUtils
 {
+	/**
+	 *	@param prefix	The prefix string to be used in generating the file's name; must be at least three characters long
+	 *	@return	{string}
+	 */
+	public static String createTemporaryFile( String prefix )
+	{
+		if ( Strings.isBlank( prefix ) )
+		{
+			throw new InvalidParameterException( "invalid prefix" );
+		}
+
+		//	...
+		String filename = null;
+
+		try
+		{
+			File fs = File.createTempFile( String.format( "det-%s", prefix ), ".tmp" );
+			filename = fs.getAbsolutePath();
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( e.getMessage() );
+		}
+
+		return filename;
+	}
+
 	public static long getFileSize( final String filePath )
 	{
 		if ( StringUtils.isBlank( filePath ) )
