@@ -7,11 +7,11 @@ import org.json.JSONObject;
 @Slf4j
 public class DeJSONUtils
 {
-	public double parseDouble( JSONObject jsonObject, String keyName )
+	public static double parseDouble( JSONObject jsonObject, String keyName )
 	{
 		return parseDouble( jsonObject, keyName, Double.NaN );
 	}
-	public double parseDouble( JSONObject jsonObject, String keyName, double defaultValue )
+	public static double parseDouble( JSONObject jsonObject, String keyName, double defaultValue )
 	{
 		if ( null == jsonObject )
 		{
@@ -42,11 +42,11 @@ public class DeJSONUtils
 	}
 
 
-	public int parseInt( JSONObject jsonObject, String keyName )
+	public static int parseInt( JSONObject jsonObject, String keyName )
 	{
 		return parseInt( jsonObject, keyName, 0 );
 	}
-	public int parseInt( JSONObject jsonObject, String keyName, int defaultValue )
+	public static int parseInt( JSONObject jsonObject, String keyName, int defaultValue )
 	{
 		if ( null == jsonObject )
 		{
