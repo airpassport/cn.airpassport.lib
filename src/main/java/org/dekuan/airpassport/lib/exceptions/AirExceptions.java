@@ -84,6 +84,13 @@ public class AirExceptions
 			super( sMessage );
 		}
 	}
+	public static class Creation extends NestedRuntimeException
+	{
+		public Creation( String sMessage )
+		{
+			super( sMessage );
+		}
+	}
 
 
 	public static class ReadData extends NestedRuntimeException
