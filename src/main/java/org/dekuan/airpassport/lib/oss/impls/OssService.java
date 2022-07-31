@@ -10,6 +10,12 @@ public class OssService implements OssStorage
 	private final AliyunOssService aliyunOssService = new AliyunOssService();
 
 
+	public OssService( OssPropertyLoader ossPropertyLoader )
+	{
+		this.setPropertyLoader( ossPropertyLoader );
+	}
+
+
 	@Override
 	public void setPropertyLoader( OssPropertyLoader ossPropertyLoader )
 	{
