@@ -48,7 +48,16 @@ import org.springframework.core.NestedRuntimeException;
 
 public class AirExceptions
 {
-	public static class InvalidParameter extends IllegalArgumentException
+	//
+	public static class NotFound extends NestedRuntimeException
+	{
+		public NotFound( String sMessage )
+		{
+			super( sMessage );
+		}
+	}
+
+	public static class InvalidParameter extends NestedRuntimeException
 	{
 		public InvalidParameter( String sMessage )
 		{
