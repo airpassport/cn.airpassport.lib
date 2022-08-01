@@ -63,6 +63,22 @@ public class DeFileUtils
 		return file.exists() && file.isDirectory();
 	}
 
+	public static boolean deleteFile( final String filePath )
+	{
+		if ( StringUtils.isBlank( filePath ) )
+		{
+			throw new InvalidParameterException( "invalid filePath" );
+		}
+
+		File file = new File( filePath );
+		if ( file.exists() && ! file.isDirectory() )
+		{
+			return file.delete();
+		}
+
+		return false;
+	}
+
 	public static long getFileSize( final String filePath )
 	{
 		if ( StringUtils.isBlank( filePath ) )
