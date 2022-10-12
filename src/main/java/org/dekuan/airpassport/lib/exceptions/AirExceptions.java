@@ -201,9 +201,9 @@ public class AirExceptions
 	}
 
 
-	public static class ValidateFailed extends NestedRuntimeException
+	public static class Validation extends NestedRuntimeException
 	{
-		public ValidateFailed( String sMessage )
+		public Validation( String sMessage )
 		{
 			super( sMessage );
 		}

@@ -1,15 +1,8 @@
 package org.dekuan.airpassport.lib.utils;
 
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHeaders;
-import org.dekuan.airpassport.lib.network.LibNetwork;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 @Component
