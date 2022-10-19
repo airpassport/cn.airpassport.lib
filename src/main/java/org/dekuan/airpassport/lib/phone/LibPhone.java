@@ -143,20 +143,36 @@ public class LibPhone
 	}
 
 
-	public static String getRegionByCountryCode( int nCountryCode )
+	public static String getRegionByCountryCode( String countryCode )
 	{
-		String sRegion = "";
+		if ( StringUtils.isBlank( countryCode ) )
+		{
+			return null;
+		}
 
 		try
 		{
-			sRegion = PhoneNumberUtil.getInstance().getRegionCodeForCountryCode( nCountryCode );
+			int number = Integer.parseInt( countryCode.trim() );
+			return getRegionByCountryCode( number );
+		}
+		catch ( NumberFormatException ex )
+		{
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+	public static String getRegionByCountryCode( int nCountryCode )
+	{
+		try
+		{
+			return PhoneNumberUtil.getInstance().getRegionCodeForCountryCode( nCountryCode );
 		}
 		catch ( Exception e )
 		{
 			//	don't care
+			return null;
 		}
-
-		return sRegion;
 	}
 
 
