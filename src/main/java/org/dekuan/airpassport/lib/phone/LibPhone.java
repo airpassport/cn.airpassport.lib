@@ -10,7 +10,20 @@ import java.util.regex.Pattern;
 
 
 /**
- *	@class	LibPhone
+ *        @class LibPhone
+ *
+ * 	com.google.i18n.phonenumbers
+ * 	Class PhoneNumberUtil
+ * 	<a href="https://javadoc.io/doc/com.googlecode.libphonenumber/libphonenumber/8.0.0/com/google/i18n/phonenumbers/PhoneNumberUtil.html#getRegionCodeForCountryCode-int-">...</a>
+ *
+ * 	Utility for international phone numbers. Functionality includes formatting, parsing and validation.
+ *	If you use this library, and want to be notified about important changes, please sign up to our mailing list.
+ *	NOTE: A lot of methods in this class require Region Code strings.
+ *	These must be provided using ISO 3166-1 two-letter country-code format. These should be in upper-case.
+ *	The list of the codes can be found here: <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm">...</a>
+ *
+ *	Author:
+ *	Shaopeng Jia
  */
 public class LibPhone
 {
