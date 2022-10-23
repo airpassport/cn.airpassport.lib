@@ -25,11 +25,17 @@ public class JwtData
 	@Min( 0 )
 	protected long tenantId = 0;
 
-	//	user mid
+	//	user id/mid
+	@Builder.Default
+	private long userId = 0;
+
 	@Builder.Default
 	private String userMid = null;
 
-	//	auth mid
+	//	auth id/mid
+	@Builder.Default
+	private long authId = 0;
+
 	@Builder.Default
 	private String authMid = null;
 
