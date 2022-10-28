@@ -11,6 +11,24 @@ import java.nio.charset.StandardCharsets;
  */
 public class DeStringUtils
 {
+	/**
+	 * 	Check If a String Is Numeric in Java
+	 * 	<a href="https://www.baeldung.com/java-check-string-number">...</a>
+	 *
+	 */
+	public boolean isNumeric( String strNum )
+	{
+		try
+		{
+			long d = Long.parseLong( strNum );
+			return true;
+		}
+		catch ( NumberFormatException nfe )
+		{
+			return false;
+		}
+	}
+
 	public static String substringInChars( String sString, int nMaxLengthInChars )
 	{
 		if ( nMaxLengthInChars <= 0 )
