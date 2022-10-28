@@ -16,7 +16,7 @@ public class DeStringUtils
 	 * 	<a href="https://www.baeldung.com/java-check-string-number">...</a>
 	 *
 	 */
-	public boolean isNumeric( String strNum )
+	public static boolean isNumeric( String strNum )
 	{
 		try
 		{
