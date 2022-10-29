@@ -1,8 +1,5 @@
 package org.dekuan.airpassport.lib.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
-
 public class DeEnvUtils
 {
 	public static String getKey()
@@ -28,14 +25,11 @@ public class DeEnvUtils
 
 	public static boolean isJUnitEnv()
 	{
-		String sDebugRpc	= System.getenv( "debug-api" );
-		if ( ! StringUtils.isBlank( sDebugRpc ) &&
-			sDebugRpc.equalsIgnoreCase( "yes" ) )
-		{
-			return true;
-		}
+		return getValue().equalsIgnoreCase( System.getProperty( getKey() ) );
+	}
 
-		String sEnvName	= System.getenv( DeEnvUtils.getKey() );
-		return !StringUtils.isBlank( sEnvName ) && DeEnvUtils.getValue().equalsIgnoreCase( sEnvName );
+	public static void setJUnitEnv()
+	{
+		System.setProperty( getKey(), getValue() );
 	}
 }
