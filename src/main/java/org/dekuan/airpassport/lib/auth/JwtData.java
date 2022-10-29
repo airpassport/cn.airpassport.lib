@@ -83,6 +83,17 @@ public class JwtData
 			StringUtils.isNotBlank( this.expire );
 	}
 
+	public boolean isCurrentlyLoggedIn()
+	{
+		return this.isLoggedIn() &&
+			this.getUserId() > 0 &&
+			this.getAuthId() > 0 &&
+			LibCommon.isValidMid( this.getUserMid() ) &&
+			LibCommon.isValidMid( this.getAuthMid() ) &&
+			StringUtils.isNotBlank( this.getExpire() )
+		;
+	}
+
 
 	/**
 	 * validate
