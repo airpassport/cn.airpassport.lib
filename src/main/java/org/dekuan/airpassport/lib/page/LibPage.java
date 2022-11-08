@@ -6,19 +6,13 @@ package org.dekuan.airpassport.lib.page;
  */
 public class LibPage
 {
-	public static int getDefaultPageNo()
-	{
-		return 1;
-	}
-	public static int getDefaultPageSize()
-	{
-		return 20;
-	}
+	public static int defaultPageNo = 1;
+	public static int defaultPageSize = 20;
 
 
 	public static int getSafePageNo( int nPageNo )
 	{
-		return LibPage.getSafePageNo( nPageNo, LibPage.getDefaultPageNo() );
+		return LibPage.getSafePageNo( nPageNo, defaultPageNo );
 	}
 	public static int getSafePageNo( int nPageNo, int nDefaultPageNo )
 	{
@@ -28,7 +22,7 @@ public class LibPage
 
 	public static int getSafePageSize( int nPageSize )
 	{
-		return LibPage.getSafePageSize( nPageSize, LibPage.getDefaultPageSize() );
+		return LibPage.getSafePageSize( nPageSize, defaultPageSize );
 	}
 	public static int getSafePageSize( int nPageSize, int nDefaultPageSize )
 	{
