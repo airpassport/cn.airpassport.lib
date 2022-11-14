@@ -6,8 +6,11 @@ package org.dekuan.airpassport.lib.page;
  */
 public class LibPage
 {
-	public static int defaultPageNo = 1;
-	public static int defaultPageSize = 20;
+	public static final int defaultPageNo		= 1;
+	public static final int defaultPageSize		= 20;
+	public static final int defaultPageSizeMax	= 100;
+	public static final int defaultPageSizeMin	= 1;
+
 
 
 	public static int getSafePageNo( int nPageNo )
@@ -26,6 +29,6 @@ public class LibPage
 	}
 	public static int getSafePageSize( int nPageSize, int nDefaultPageSize )
 	{
-		return ( nPageSize > 0 && nPageSize <= nDefaultPageSize ) ? nPageSize : nDefaultPageSize;
+		return ( nPageSize >= defaultPageSizeMin && nPageSize <= defaultPageSizeMax ) ? nPageSize : nDefaultPageSize;
 	}
 }
