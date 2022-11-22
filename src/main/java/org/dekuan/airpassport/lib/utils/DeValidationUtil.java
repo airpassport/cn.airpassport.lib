@@ -32,7 +32,7 @@ public class DeValidationUtil
 		}
 		catch ( Exception e )
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}
 	}
