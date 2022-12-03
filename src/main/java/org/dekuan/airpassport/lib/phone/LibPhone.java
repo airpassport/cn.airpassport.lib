@@ -143,6 +143,10 @@ public class LibPhone
 	}
 
 
+	/**
+	 *	@param countryCode	- "86"
+	 *	@return			- "CN"
+	 */
 	public static String getRegionByCountryCode( String countryCode )
 	{
 		if ( StringUtils.isBlank( countryCode ) )
@@ -162,6 +166,10 @@ public class LibPhone
 		}
 	}
 
+	/**
+	 *	@param nCountryCode	- 86
+	 *	@return			- "CN"
+	 */
 	public static String getRegionByCountryCode( int nCountryCode )
 	{
 		try
