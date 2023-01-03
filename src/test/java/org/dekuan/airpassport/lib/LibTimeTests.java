@@ -17,6 +17,10 @@ public class LibTimeTests
 	{
 		LocalDateTime ldtChinaNow = LibTime.getChinaNow();
 		assertTrue( ldtChinaNow.getYear() > 0 );
+
+		//	just a testing
+		LocalDate ld1 = ldtChinaNow.plusDays( 1 ).toLocalDate();
+		assertTrue( ld1.isAfter( ldtChinaNow.toLocalDate() ) );
 	}
 
 	@Test
