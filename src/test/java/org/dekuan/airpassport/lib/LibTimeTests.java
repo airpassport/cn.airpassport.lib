@@ -5,12 +5,20 @@ import org.dekuan.airpassport.lib.time.LibTime;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class LibTimeTests
 {
+	@Test
+	public void testChinaNowCase1()
+	{
+		LocalDateTime ldtChinaNow = LibTime.getChinaNow();
+		assertTrue( ldtChinaNow.getYear() > 0 );
+	}
+
 	@Test
 	public void testGetTimestampWithGMTCase1()
 	{

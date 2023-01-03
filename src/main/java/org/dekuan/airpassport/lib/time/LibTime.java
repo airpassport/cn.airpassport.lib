@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.TimeZone;
 
 
@@ -42,6 +43,14 @@ public class LibTime
 		}
 
 		return parsedDate;
+	}
+
+	/**
+	 * 	获取中国时区的当前时间
+	 */
+	public static LocalDateTime getChinaNow()
+	{
+		return LocalDateTime.now( ZoneId.of( "Asia/Shanghai" ) );
 	}
 
 	public static LocalDateTime fromDateTimeString( String datetime )
