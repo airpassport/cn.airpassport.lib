@@ -1,5 +1,6 @@
 package org.dekuan.airpassport.lib;
 
+import org.dekuan.airpassport.lib.time.LibTime;
 import org.dekuan.airpassport.lib.utils.DeDateTimeUtils;
 import org.junit.Test;
 
@@ -7,10 +8,19 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class DeDateTimeUtilsTests
 {
+	@Test
+	public void testBuildIsoStringOfDateTime()
+	{
+		String stringDateTime =  DeDateTimeUtils.buildIsoStringWithTSplitOfLocalDateTime( LibTime.getChinaNow() );
+		System.out.println( stringDateTime );
+		assertTrue( stringDateTime.length() > 0 );
+	}
+
 	@Test
 	public void testCase1()
 	{

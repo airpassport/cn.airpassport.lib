@@ -112,12 +112,16 @@ public class DeDateTimeUtils
 	}
 	public static String buildIsoStringOfLocalDateTime( LocalDateTime localDateTime )
 	{
+		return localDateTime.format( isoLocalDateTimeFormatter );
+	}
+	public static String buildIsoStringWithTSplitOfLocalDateTime( LocalDateTime localDateTime )
+	{
 		if ( null == localDateTime )
 		{
 			return "";
 		}
 
-		return localDateTime.format( isoLocalDateTimeFormatter );
+		return localDateTime.withNano( 0 ).toString();
 	}
 
 
