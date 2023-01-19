@@ -50,17 +50,12 @@ public class RestHeader implements Serializable
 	@Builder.Default
 	protected long timestamp	= System.currentTimeMillis();
 
+	@Builder.Default
+	protected int pageNo = 1;
 
+	@Builder.Default
+	protected int pageSize = 0;
 
-	public void setVersion( String version )
-	{
-		if ( StringUtils.isBlank( version ) )
-		{
-			throw new AirExceptions.InvalidParameter( "invalid version" );
-		}
-
-		this.version = version;
-	}
 
 	public boolean isValid()
 	{
