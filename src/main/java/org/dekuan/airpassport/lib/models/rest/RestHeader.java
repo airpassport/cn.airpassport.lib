@@ -57,6 +57,11 @@ public class RestHeader implements Serializable
 	protected int pageSize = 0;
 
 
+	public RestHeader( String error )
+	{
+		this.setError( error );
+	}
+
 	public boolean isValid()
 	{
 		return StringUtils.isNotBlank( this.version );
