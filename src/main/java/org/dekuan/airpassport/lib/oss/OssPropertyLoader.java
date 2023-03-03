@@ -28,6 +28,17 @@ public abstract class OssPropertyLoader
 		return aliyunOss.isValid() && supportedMimes.size() > 0;
 	}
 
+	public boolean isSupportedExtension( @NotNull String fileExtension )
+	{
+		//
+		//	supportedMimes
+		//		{ extension:, mimeType: }
+		//
+		String finalFileExtension = fileExtension.trim();
+		return StringUtils.isNotBlank( finalFileExtension ) &&
+			supportedMimes.stream().anyMatch( m -> finalFileExtension.equalsIgnoreCase( m.extension ) );
+	}
+
 	public boolean isSupportedMimeType( @NotNull String mimeType )
 	{
 		//
@@ -39,8 +50,35 @@ public abstract class OssPropertyLoader
 			supportedMimes.stream().anyMatch( m -> finalMimeType.equalsIgnoreCase( m.mimeType ) );
 	}
 
+
+	public String getMimeTypeByExtension( String fileExtension )
+	{
+		if ( StringUtils.isBlank( fileExtension ) )
+		{
+			return null;
+		}
+
+		String finalFileExtension = fileExtension.trim();
+		if ( ! this.isSupportedExtension( finalFileExtension ) )
+		{
+			return null;
+		}
+
+		SupportedMime supportedMime = supportedMimes.stream()
+			.filter( m -> finalFileExtension.equalsIgnoreCase( m.extension ) )
+			.findFirst()
+			.orElse( null );
+
+		return null != supportedMime ? supportedMime.getMimeType() : null;
+	}
+
 	public String getExtensionByMimeType( String mimeType )
 	{
+		if ( StringUtils.isBlank( mimeType ) )
+		{
+			return null;
+		}
+
 		String finalMimeType = mimeType.trim();
 		if ( ! this.isSupportedMimeType( finalMimeType ) )
 		{
@@ -54,6 +92,8 @@ public abstract class OssPropertyLoader
 
 		return null != supportedMime ? supportedMime.getExtension() : null;
 	}
+
+
 
 	@Getter
 	@Setter

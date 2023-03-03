@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.net.URL;
+
 public interface OssStorage
 {
 	@Getter
@@ -32,6 +34,9 @@ public interface OssStorage
 	UploadReturn uploadFile( String fullFilePath );
 
 	UploadReturn uploadFile( String fullFilePath, String customizeSha256, String customizeFileName, String customizeFileExt );
+
+	//	生成分享链接
+	URL generateSharingUrl( String keyName, String fileExtension );
 
 	String downloadToTemporaryFile( String keyName );
 

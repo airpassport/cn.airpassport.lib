@@ -4,6 +4,8 @@ import org.dekuan.airpassport.lib.oss.OssPropertyLoader;
 import org.dekuan.airpassport.lib.oss.OssStorage;
 import org.dekuan.airpassport.lib.oss.impls.aliyun.AliyunOssService;
 
+import java.net.URL;
+
 
 public class OssService implements OssStorage
 {
@@ -33,6 +35,12 @@ public class OssService implements OssStorage
 					String customizeFileExt )
 	{
 		return aliyunOssService.uploadFile( fullFilePath, customizeSha256, customizeFileName, customizeFileExt );
+	}
+
+	@Override
+	public URL generateSharingUrl( String keyName, String fileExtension )
+	{
+		return aliyunOssService.generateSharingUrl( keyName, fileExtension );
 	}
 
 	@Override
