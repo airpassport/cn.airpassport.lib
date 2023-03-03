@@ -187,6 +187,13 @@ public class AliyunOssService implements OssStorage
 	@Override
 	public URL generateSharingUrl( String keyName, String fileExtension )
 	{
+		//	默认一个小时的生存时间（有效期）
+		return generateSharingUrl( keyName, fileExtension, defaultLiveInMilliseconds );
+	}
+
+	@Override
+	public URL generateSharingUrl( String keyName, String fileExtension, long liveInMilliseconds )
+	{
 		if ( null == ossPros || ! ossPros.isValid() )
 		{
 			throw new InvalidParameterException( "invalid properties" );
@@ -198,6 +205,10 @@ public class AliyunOssService implements OssStorage
 		if ( StringUtils.isBlank( fileExtension ) )
 		{
 			throw new InvalidParameterException( "invalid fileExtension" );
+		}
+		if ( liveInMilliseconds <= 0 )
+		{
+			liveInMilliseconds = defaultLiveInMilliseconds;
 		}
 
 		String contentType = ossPros.getMimeTypeByExtension( fileExtension );
@@ -221,17 +232,25 @@ public class AliyunOssService implements OssStorage
 				return null;
 			}
 
+			//	设置过期时间为 1 小时
+			//	指定生成的签名 URL 过期时间，单位为毫秒
+			Date expiration = new Date( new Date().getTime() + liveInMilliseconds );
+
+			//	通过HTTP GET请求生成签名URL。
+			return ossClient.generatePresignedUrl
+				(
+					ossPros.getAliyunOss().getBucketName(),
+					keyName,
+					expiration
+				);
+
+			/*
 			// 生成签名URL。
 			GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest
 				(
 					ossPros.getAliyunOss().getBucketName(),
-					keyName,
-					HttpMethod.GET
+					keyName
 				);
-
-			//	设置过期时间为 1 小时
-			//	指定生成的签名 URL 过期时间，单位为毫秒
-			Date expiration = new Date( new Date().getTime() + 60 * 60 * 1000 );
 			request.setExpiration( expiration );
 
 			//	设置 HTTP 请求头
@@ -263,9 +282,8 @@ public class AliyunOssService implements OssStorage
 
 			//	设置单链接限速，单位为bit，例如限速100 KB/s。
 			//	request.setTrafficLimit(100 * 1024 * 8);
-
-			//	通过HTTP GET请求生成签名URL。
 			return ossClient.generatePresignedUrl( request );
+			*/
 		}
 		catch ( OSSException oe )
 		{

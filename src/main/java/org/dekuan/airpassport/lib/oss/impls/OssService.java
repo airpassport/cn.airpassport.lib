@@ -44,6 +44,12 @@ public class OssService implements OssStorage
 	}
 
 	@Override
+	public URL generateSharingUrl( String keyName, String fileExtension, long liveInMilliseconds )
+	{
+		return aliyunOssService.generateSharingUrl( keyName, fileExtension, liveInMilliseconds );
+	}
+
+	@Override
 	public String downloadToTemporaryFile( String keyName )
 	{
 		return aliyunOssService.downloadToTemporaryFile( keyName );

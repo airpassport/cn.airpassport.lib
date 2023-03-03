@@ -10,6 +10,8 @@ import java.net.URL;
 
 public interface OssStorage
 {
+	long defaultLiveInMilliseconds = 60 * 60 * 1000;
+
 	@Getter
 	@Setter
 	@SuperBuilder
@@ -37,6 +39,7 @@ public interface OssStorage
 
 	//	生成分享链接
 	URL generateSharingUrl( String keyName, String fileExtension );
+	URL generateSharingUrl( String keyName, String fileExtension, long liveInMilliseconds );
 
 	String downloadToTemporaryFile( String keyName );
 
