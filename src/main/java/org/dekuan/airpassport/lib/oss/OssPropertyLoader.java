@@ -106,6 +106,7 @@ public abstract class OssPropertyLoader
 		public final static long FILE_SIZE_MAX_VALUE	= 52428800;
 
 
+		private String domain		= null;
 		private String endpoint		= null;
 		private String bucketName      = null;
 		private String accessKeyId	= null;
@@ -116,7 +117,8 @@ public abstract class OssPropertyLoader
 
 		public boolean isValid()
 		{
-			return StringUtils.isNotBlank( this.endpoint ) &&
+			return StringUtils.isNotBlank( this.domain ) &&
+				StringUtils.isNotBlank( this.endpoint ) &&
 				StringUtils.isNotBlank( this.accessKeyId ) &&
 				StringUtils.isNotBlank( this.accessKeySecret ) &&
 				StringUtils.isNotBlank( this.bucketName ) &&
