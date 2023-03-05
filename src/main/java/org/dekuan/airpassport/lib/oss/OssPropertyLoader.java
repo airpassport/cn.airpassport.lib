@@ -106,7 +106,10 @@ public abstract class OssPropertyLoader
 		public final static long FILE_SIZE_MAX_VALUE	= 52428800;
 
 
+		private String protocol		= null;
 		private String domain		= null;
+		private int    port		= -1;
+
 		private String endpoint		= null;
 		private String bucketName      = null;
 		private String accessKeyId	= null;
@@ -117,7 +120,9 @@ public abstract class OssPropertyLoader
 
 		public boolean isValid()
 		{
-			return StringUtils.isNotBlank( this.domain ) &&
+			return StringUtils.isNotBlank( this.protocol ) &&
+				StringUtils.isNotBlank( this.domain ) &&
+				( this.port >= -1 && this.port <= 65536 ) &&
 				StringUtils.isNotBlank( this.endpoint ) &&
 				StringUtils.isNotBlank( this.accessKeyId ) &&
 				StringUtils.isNotBlank( this.accessKeySecret ) &&
