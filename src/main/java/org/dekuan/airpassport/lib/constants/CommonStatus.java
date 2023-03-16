@@ -7,6 +7,7 @@ public class CommonStatus
 	public static final int ARCHIVED	= 2;	//	已归档的
 	public static final int DELETED		= 3;	//	已删除的
 	public static final int PAUSED		= 4;	//	已暂停的
+	public static final int STOPPED		= 5;	//	已停止的
 
 
 	public static boolean isValid( int status )
@@ -15,7 +16,8 @@ public class CommonStatus
 			OKAY == status ||
 			ARCHIVED == status ||
 			DELETED == status ||
-			PAUSED == status
+			PAUSED == status ||
+			STOPPED == status
 		;
 	}
 }
