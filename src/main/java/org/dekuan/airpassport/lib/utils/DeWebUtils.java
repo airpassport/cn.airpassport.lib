@@ -18,6 +18,56 @@ import org.apache.logging.log4j.util.Strings;
 
 public class DeWebUtils
 {
+	public static int getRequestQueryIntValue( String name )
+	{
+		try
+		{
+			String stringVal = getRequestQueryStringValue( name );
+			if ( StringUtils.isNotBlank( stringVal ) )
+			{
+				return Integer.parseInt( stringVal );
+			}
+
+			return 0;
+		}
+		catch ( Exception e )
+		{
+			return 0;
+		}
+	}
+	public static long getRequestQueryLongValue( String name )
+	{
+		try
+		{
+			String stringVal = getRequestQueryStringValue( name );
+			if ( StringUtils.isNotBlank( stringVal ) )
+			{
+				return Long.parseLong( stringVal );
+			}
+
+			return 0;
+		}
+		catch ( Exception e )
+		{
+			return 0;
+		}
+	}
+	public static String getRequestQueryStringValue( String name )
+	{
+		if ( StringUtils.isBlank( name ) )
+		{
+			return null;
+		}
+
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		if ( null != httpServletRequest )
+		{
+			return httpServletRequest.getParameter( name );
+		}
+
+		return null;
+	}
+
 	public static String getClientIp()
 	{
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
