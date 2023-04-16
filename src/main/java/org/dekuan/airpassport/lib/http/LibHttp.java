@@ -11,9 +11,11 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.util.EntityUtils;
+import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -78,6 +80,10 @@ public abstract class LibHttp
 
 	@Builder.Default
 	protected Auth auth		= null;
+
+	//	HTTP Proxy
+	@Builder.Default
+	protected HttpHost httpProxy	= null;
 
 	@Builder.Default
 	protected Header header		= null;
@@ -161,12 +167,16 @@ public abstract class LibHttp
 
 	protected RequestConfig buildCustomRequestConfig( int timeout )
 	{
-		return RequestConfig
-			.custom()
-			.setConnectionRequestTimeout( timeout > 0 ? timeout : CONNECTION_REQUEST_TIMEOUT_MS )
-			.setConnectTimeout( timeout > 0 ? timeout : CONNECT_TIMEOUT_MS )
-			.setSocketTimeout( timeout > 0 ? timeout : SOCKET_TIMEOUT_MS )
-			.build();
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+		requestConfigBuilder.setConnectionRequestTimeout( timeout > 0 ? timeout : CONNECTION_REQUEST_TIMEOUT_MS );
+		requestConfigBuilder.setConnectTimeout( timeout > 0 ? timeout : CONNECT_TIMEOUT_MS );
+		requestConfigBuilder.setSocketTimeout( timeout > 0 ? timeout : SOCKET_TIMEOUT_MS );
+		if ( null != httpProxy )
+		{
+			requestConfigBuilder.setProxy( httpProxy );
+		}
+
+		return requestConfigBuilder.build();
 	}
 
 
