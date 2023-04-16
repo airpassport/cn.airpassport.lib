@@ -70,7 +70,7 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 		}
 	}
 
-	protected HttpResponse fetchRaw( HttpMethod method ) throws IOException
+	protected HttpResponseRaw fetchRaw( HttpMethod method ) throws IOException
 	{
 		if ( ! HttpMethod.isBaseRequest( method ) )
 		{
@@ -97,7 +97,13 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
-				return response;
+				HttpEntity entity = response.getEntity();
+				String body = ( null != entity ? EntityUtils.toString( entity ) : null );
+
+				return HttpResponseRaw.builder()
+					.status( response.getStatusLine().getStatusCode() )
+					.body( body )
+					.build();
 			}
 		}
 		catch ( InterruptedIOException e )
@@ -118,11 +124,10 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 	{
 		try
 		{
-			HttpResponse response = this.fetchRaw( method );
+			HttpResponseRaw response = this.fetchRaw( method );
 			if ( null != response )
 			{
-				HttpEntity entity = response.getEntity();
-				return null != entity ? EntityUtils.toString( entity ) : null;
+				return response.getBody();
 			}
 
 			return null;
@@ -172,9 +177,27 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 			//
 			//	normal headers
 			//
-			httpRequest.setHeader( HttpHeaders.USER_AGENT, this.getHeader().getUserAgentValue() );
-			httpRequest.setHeader( HttpHeaders.ACCEPT, this.getHeader().getAcceptValue() );
-			httpRequest.setHeader( "X-TenantID", this.getHeader().getXTenantIDValue() );
+			if ( Strings.isNotEmpty( this.getHeader().getContentTypeValue() ) )
+			{
+				httpRequest.setHeader( HttpHeaders.CONTENT_TYPE, this.getHeader().getContentTypeValue() );
+			}
+			else if ( LibHttp.HttpContentType.ApplicationJson == this.getContentType() )
+			{
+				httpRequest.setHeader( HttpHeaders.CONTENT_TYPE, "application/json" );
+			}
+
+			if ( Strings.isNotEmpty( this.getHeader().getUserAgentValue() ) )
+			{
+				httpRequest.setHeader( HttpHeaders.USER_AGENT, this.getHeader().getUserAgentValue() );
+			}
+			if ( Strings.isNotEmpty( this.getHeader().getAcceptValue() ) )
+			{
+				httpRequest.setHeader( HttpHeaders.ACCEPT, this.getHeader().getAcceptValue() );
+			}
+			if ( Strings.isNotEmpty( this.getHeader().getXTenantIDValue() ) )
+			{
+				httpRequest.setHeader( "X-TenantID", this.getHeader().getXTenantIDValue() );
+			}
 
 			//
 			//	process auth

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface LibHttpRequest
 {
-	HttpResponse fetchRaw() throws IOException;
+	HttpResponseRaw fetchRaw() throws IOException;
 
 	String fetchString() throws IOException;
 

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LibHttpPut extends LibHttpEntityRequest
 {
 	@Override
-	public HttpResponse fetchRaw() throws IOException
+	public HttpResponseRaw fetchRaw() throws IOException
 	{
 		return fetchRaw( HttpMethod.PUT );
 	}

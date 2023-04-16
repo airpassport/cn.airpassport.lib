@@ -239,13 +239,16 @@ public abstract class LibHttp
 	public static class Header
 	{
 		@Builder.Default
-		protected String acceptValue	= "application/json";
+		protected String contentTypeValue	= "application/json";
 
 		@Builder.Default
-		protected String userAgentValue	= defaultUserAgent;
+		protected String acceptValue		= "application/json";
 
 		@Builder.Default
-		protected String xTenantIDValue	= "";
+		protected String userAgentValue		= defaultUserAgent;
+
+		@Builder.Default
+		protected String xTenantIDValue		= "";
 
 		@Builder.Default
 		HashMap<String,String> customHeaders	= new HashMap<>();

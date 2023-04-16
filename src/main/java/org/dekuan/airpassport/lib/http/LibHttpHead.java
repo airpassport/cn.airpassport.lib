@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LibHttpHead extends LibHttpBaseRequest
 {
 	@Override
-	public HttpResponse fetchRaw() throws IOException
+	public HttpResponseRaw fetchRaw() throws IOException
 	{
 		return fetchRaw( HttpMethod.HEAD );
 	}
