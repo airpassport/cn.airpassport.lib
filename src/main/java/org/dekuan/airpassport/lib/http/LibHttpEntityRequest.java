@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.exceptions.AirExceptions;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.security.InvalidParameterException;
@@ -70,7 +71,7 @@ public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpReq
 		}
 	}
 
-	protected String fetchString( HttpMethod method ) throws IOException
+	protected HttpResponse fetchRaw( HttpMethod method )
 	{
 		if ( ! LibHttp.HttpMethod.isPostRequest( method ) )
 		{
@@ -97,20 +98,35 @@ public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpReq
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
-				if ( null != response )
-				{
-					HttpEntity   entity = response.getEntity();
-					return null != entity ? EntityUtils.toString( entity ) : null;
-				}
-
-				return null;
+				return response;
 			}
 		}
 		catch ( InterruptedIOException e )
 		{
 			e.printStackTrace();
-			log.error( "InterruptedIOException in fetchString, {}", e.getMessage() );
+			log.error( "InterruptedIOException in fetchRaw, {}", e.getMessage() );
 			throw new AirExceptions.Timeout( String.format( "post request timeout, %s", e.getMessage() ) );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( "exception in fetchRaw, {}", e.getMessage() );
+			throw new AirExceptions.Execute( String.format( "failed to post request, %s", e.getMessage() ) );
+		}
+	}
+
+	protected String fetchString( HttpMethod method ) throws IOException
+	{
+		try
+		{
+			HttpResponse response = this.fetchRaw( method );
+			if ( null != response )
+			{
+				HttpEntity   entity = response.getEntity();
+				return null != entity ? EntityUtils.toString( entity ) : null;
+			}
+
+			return null;
 		}
 		catch ( Exception e )
 		{

@@ -3,6 +3,7 @@ package org.dekuan.airpassport.lib.http;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
 
@@ -11,6 +12,12 @@ import java.io.IOException;
 @Slf4j
 public class LibHttpHead extends LibHttpBaseRequest
 {
+	@Override
+	public HttpResponse fetchRaw() throws IOException
+	{
+		return fetchRaw( HttpMethod.HEAD );
+	}
+
 	@Override
 	public String fetchString() throws IOException
 	{

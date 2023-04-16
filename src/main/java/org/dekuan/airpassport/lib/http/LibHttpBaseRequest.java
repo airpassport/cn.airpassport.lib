@@ -70,7 +70,7 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 		}
 	}
 
-	protected String fetchString( HttpMethod method ) throws IOException
+	protected HttpResponse fetchRaw( HttpMethod method ) throws IOException
 	{
 		if ( ! HttpMethod.isBaseRequest( method ) )
 		{
@@ -97,9 +97,35 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 			//
 			try ( CloseableHttpResponse response = httpClient.execute( httpRequest ) )
 			{
+				return response;
+			}
+		}
+		catch ( InterruptedIOException e )
+		{
+			e.printStackTrace();
+			log.error( "InterruptedIOException in fetchRaw, {}", e.getMessage() );
+			throw new AirExceptions.Timeout( String.format( "get request timeout, %s", e.getMessage() ) );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			log.error( "exception in fetchRaw, {}", e.getMessage() );
+			throw new AirExceptions.Execute( String.format( "failed to get request, %s", e.getMessage() ) );
+		}
+	}
+
+	protected String fetchString( HttpMethod method ) throws IOException
+	{
+		try
+		{
+			HttpResponse response = this.fetchRaw( method );
+			if ( null != response )
+			{
 				HttpEntity entity = response.getEntity();
 				return null != entity ? EntityUtils.toString( entity ) : null;
 			}
+
+			return null;
 		}
 		catch ( InterruptedIOException e )
 		{
@@ -113,37 +139,6 @@ public abstract class LibHttpBaseRequest extends LibHttp implements LibHttpReque
 			log.error( "exception in fetchString, {}", e.getMessage() );
 			throw new AirExceptions.Execute( String.format( "failed to get request, %s", e.getMessage() ) );
 		}
-	}
-
-
-	protected StringEntity _buildRequestStringEntity()
-	{
-		StringEntity requestEntity = null;
-
-		try
-		{
-			if ( HttpContentType.ApplicationJson == this.getContentType() )
-			{
-				//
-				//	content type : JSON
-				//
-				String jsonString = "{}";
-				if ( null != this.getPostData() )
-				{
-					jsonString = new Gson().toJson( this.getPostData() );
-				}
-
-				//	...
-				requestEntity = new StringEntity( jsonString, ContentType.APPLICATION_JSON );
-			}
-		}
-		catch ( Exception e )
-		{
-			log.info( "failed in _buildRequestStringEntity, {}", e.getMessage() );
-			throw new AirExceptions.Execute( e.getMessage() );
-		}
-
-		return requestEntity;
 	}
 
 	protected HttpRequestBase _buildHttpRequestObject()
