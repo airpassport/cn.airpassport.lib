@@ -156,7 +156,16 @@ public abstract class LibHttpEntityRequest extends LibHttp implements LibHttpReq
 				String jsonString = "{}";
 				if ( null != this.getPostData() )
 				{
-					jsonString = new Gson().toJson( this.getPostData() );
+					if ( this.getPostData() instanceof String )
+					{
+						//	已经是 String
+						jsonString = (String)this.getPostData();
+					}
+					else
+					{
+						//	json encode
+						jsonString = new Gson().toJson( this.getPostData() );
+					}
 				}
 
 				//	...
