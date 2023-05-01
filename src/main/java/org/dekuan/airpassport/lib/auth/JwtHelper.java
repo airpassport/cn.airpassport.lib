@@ -98,17 +98,25 @@ public class JwtHelper
 			Jws<Claims> jws = Jwts.parserBuilder().setSigningKey( this.signKey ).build().parseClaimsJws( jwtString );
 			if ( null != jws )
 			{
+				long tenantId = ( long ) jws.getBody().getOrDefault( "tenantId", 0 );
+				long userId = ( long ) jws.getBody().getOrDefault( "userId", 0 );
+				long authId = ( long ) jws.getBody().getOrDefault( "authId", 0 );
 				String userMid = ( String ) jws.getBody().getOrDefault( "userMid", "" );
 				String authMid = ( String ) jws.getBody().getOrDefault( "authMid", "" );
 				String token   = ( String ) jws.getBody().getOrDefault( "token", "" );
 				String expire  = ( String ) jws.getBody().getOrDefault( "expire", "" );
+				boolean loggedIn  = ( boolean ) jws.getBody().getOrDefault( "loggedIn", false );
 				String role    = ( String ) jws.getBody().getOrDefault( "role", "" );
 
 				JwtData jwtData = JwtData.jwtDataBuilder()
+					.tenantId( tenantId )
+					.userId( userId )
+					.authId( authId )
 					.userMid( userMid )
 					.authMid( authMid )
 					.token( token )
 					.expire( expire )
+					.loggedIn( loggedIn )
 					.role( role )
 					.jwt( jwtString )
 					.build();
