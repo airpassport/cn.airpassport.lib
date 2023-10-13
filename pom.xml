@@ -5,7 +5,7 @@
 
     <groupId>org.dekuan.airpassport</groupId>
     <artifactId>lib</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>AirPassportLib</name>
     <description>Lib of AirPassport by Dekuan, Inc.</description>
 
