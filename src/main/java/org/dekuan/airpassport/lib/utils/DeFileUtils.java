@@ -55,24 +55,22 @@ public class DeFileUtils
 
 	public static boolean isFileExists( final String filePath )
 	{
-		if ( StringUtils.isBlank( filePath ) )
+		if ( ! StringUtils.isBlank( filePath ) )
 		{
-			throw new InvalidParameterException( "invalid filePath" );
+			File file = new File( filePath );
+			return file.exists() && ( ! file.isDirectory() );
 		}
-
-		File file = new File( filePath );
-		return file.exists() && ( ! file.isDirectory() );
+		return false;
 	}
 
 	public static boolean isDirectoryExists( final String filePath )
 	{
-		if ( StringUtils.isBlank( filePath ) )
+		if ( ! StringUtils.isBlank( filePath ) )
 		{
-			throw new InvalidParameterException( "invalid filePath" );
+			File file = new File( filePath );
+			return file.exists() && file.isDirectory();
 		}
-
-		File file = new File( filePath );
-		return file.exists() && file.isDirectory();
+		return false;
 	}
 
 	public static boolean deleteFile( final String filePath )
