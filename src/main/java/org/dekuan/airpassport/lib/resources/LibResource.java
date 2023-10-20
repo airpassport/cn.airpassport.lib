@@ -6,15 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.dekuan.airpassport.lib.utils.DeFileUtils;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.InvalidParameterException;
-import java.util.stream.Collectors;
-import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class LibResource

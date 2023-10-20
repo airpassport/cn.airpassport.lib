@@ -46,7 +46,7 @@ public class DeFileUtils
 		}
 		catch ( Exception e )
 		{
-			e.printStackTrace();
+	//		e.printStackTrace();
 			log.error( e.getMessage() );
 		}
 

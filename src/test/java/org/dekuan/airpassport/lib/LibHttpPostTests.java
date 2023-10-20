@@ -1,20 +1,10 @@
 package org.dekuan.airpassport.lib;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.Consts;
-import org.dekuan.airpassport.lib.http.HttpModel;
-import org.dekuan.airpassport.lib.http.LibHttp;
-import org.dekuan.airpassport.lib.http.LibHttpEntityRequest;
-import org.dekuan.airpassport.lib.http.LibHttpPost;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 public class LibHttpPostTests

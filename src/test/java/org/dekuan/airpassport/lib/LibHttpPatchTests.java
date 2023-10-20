@@ -1,15 +1,7 @@
 package org.dekuan.airpassport.lib;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dekuan.airpassport.lib.http.HttpModel;
-import org.dekuan.airpassport.lib.http.LibHttp;
-import org.dekuan.airpassport.lib.http.LibHttpPatch;
-import org.dekuan.airpassport.lib.http.LibHttpPost;
 import org.junit.Test;
-
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 public class LibHttpPatchTests
