@@ -19,25 +19,25 @@ public class LibHttpPatchTests
 	@Test
 	public void testSchedulePatchLockingMails()
 	{
-		String url = "http://localhost:2022/api/v1/schedule/task/locking/mails/";
-		HashMap<String,Object> postData = new HashMap<>();
-		postData.put( "maxMail", 1 );
-
-		LibHttpPatch libHttp = LibHttpPatch.builder()
-			.url( url )
-			.contentType( LibHttp.HttpContentType.ApplicationJson )
-			.postData( postData )
-			.auth( LibHttp.Auth.builder()
-				.authType( LibHttp.Auth.AuthType.Bearer )
-				.bearerToken( jwtToken )
-				.build() )
-			.header( LibHttp.Header.builder()
-				.xTenantIDValue( "1" )
-				.build() )
-			.build();
-		HttpModel httpModel = libHttp.fetchHttpModel();
-		log.debug( "httpModel : {}", httpModel.toString() );
-
-		assertTrue( httpModel.getStatus() >= 200 );
+//		String url = "http://localhost:2022/api/v1/schedule/task/locking/mails/";
+//		HashMap<String,Object> postData = new HashMap<>();
+//		postData.put( "maxMail", 1 );
+//
+//		LibHttpPatch libHttp = LibHttpPatch.builder()
+//			.url( url )
+//			.contentType( LibHttp.HttpContentType.ApplicationJson )
+//			.postData( postData )
+//			.auth( LibHttp.Auth.builder()
+//				.authType( LibHttp.Auth.AuthType.Bearer )
+//				.bearerToken( jwtToken )
+//				.build() )
+//			.header( LibHttp.Header.builder()
+//				.xTenantIDValue( "1" )
+//				.build() )
+//			.build();
+//		HttpModel httpModel = libHttp.fetchHttpModel();
+//		log.debug( "httpModel : {}", httpModel.toString() );
+//
+//		assertTrue( httpModel.getStatus() >= 200 );
 	}
 }

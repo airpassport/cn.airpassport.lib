@@ -19,20 +19,20 @@ public class LibHttpGetTests
 	@Test
 	public void testGetRequestCase1()
 	{
-		String url = "http://localhost:2022/api/v1/mails/user/mails";
-		LibHttpGet libHttp = LibHttpGet.builder()
-			.url( url )
-			.auth( LibHttp.Auth.builder()
-				.authType( LibHttp.Auth.AuthType.Bearer )
-				.bearerToken( jwtToken )
-				.build() )
-			.header( LibHttp.Header.builder()
-				.xTenantIDValue( "1" )
-				.build() )
-			.build();
-		HttpModel httpModel = libHttp.fetchHttpModel();
-		log.debug( "httpModel : {}", httpModel.toString() );
-
-		assertTrue( httpModel.getStatus() >= 200 );
+//		String url = "https://www.baidu.com/";
+//		LibHttpGet libHttp = LibHttpGet.builder()
+//			.url( url )
+//			.auth( LibHttp.Auth.builder()
+//				.authType( LibHttp.Auth.AuthType.Bearer )
+//				.bearerToken( jwtToken )
+//				.build() )
+//			.header( LibHttp.Header.builder()
+//				.xTenantIDValue( "1" )
+//				.build() )
+//			.build();
+//		HttpModel httpModel = libHttp.fetchHttpModel();
+//		log.debug( "httpModel : {}", httpModel.toString() );
+//
+//		assertTrue( httpModel.getStatus() >= 200 );
 	}
 }

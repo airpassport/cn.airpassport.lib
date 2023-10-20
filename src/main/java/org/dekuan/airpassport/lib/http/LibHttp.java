@@ -15,7 +15,6 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.util.EntityUtils;
-import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.util.Base64;
 import java.util.HashMap;

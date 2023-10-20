@@ -19,17 +19,29 @@ public class DeFileUtils
 	 */
 	public static String createTemporaryFile( String prefix )
 	{
-		if ( Strings.isBlank( prefix ) )
-		{
-			throw new InvalidParameterException( "invalid prefix" );
-		}
-
-		//	...
+		return DeFileUtils.createTemporaryFile( prefix, "tmp" );
+	}
+	public static String createTemporaryFile( String prefix, String suffix )
+	{
 		String filename = null;
 
 		try
 		{
-			File fs = File.createTempFile( String.format( "det-%s", prefix ), ".tmp" );
+			//	prefix
+			prefix = String.format( "det-%s", com.google.common.base.Strings.nullToEmpty( prefix ) );
+
+			//	suffix
+			if ( Strings.isBlank( suffix ) )
+			{
+				suffix = ".tmp";
+			}
+			else if ( ! suffix.startsWith( "." ) )
+			{
+				suffix = String.format( ".%s", suffix );
+			}
+
+			//	create it
+			File fs = File.createTempFile( prefix, suffix );
 			filename = fs.getAbsolutePath();
 		}
 		catch ( Exception e )
