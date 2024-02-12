@@ -35,7 +35,7 @@ public class AccountEnums
 			put( GENDERLESS,	"中性" );
 			put( UNKNOWN,		"保密" );
 		}};
-		public static Map<Integer, String> getValidGenderTypes()
+		public static Map<Integer, String> getValidGenders()
 		{
 			return nameMap.entrySet().stream()
 				.filter( entry -> UNSET != entry.getKey() )
@@ -67,7 +67,7 @@ public class AccountEnums
 			put( US,	"美国" );
 		}};
 
-		public static Map<String, String> getValidAuthTypes()
+		public static Map<String, String> getValidRegions()
 		{
 			return nameMap.entrySet().stream()
 				.filter( entry -> ! UNSET.equalsIgnoreCase( entry.getKey() ) )
